@@ -1,0 +1,153 @@
+/* 전체 컨테이너 스타일 */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f9fafb;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* 로고 스타일 */
+.logoBox {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+}
+
+/* 제목 스타일 */
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 폼 스타일 */
+.form {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 입력 필드 스타일 */
+.label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+}
+
+/* 버튼 스타일 */
+.button {
+    padding: 12px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* 에러 메시지 스타일 */
+.error {
+    font-size: 14px;
+    color: #d9534f;
+    text-align: center;
+}
+
+/* 성공 메시지 스타일 */
+.success {
+    font-size: 14px;
+    color: #5cb85c;
+    text-align: center;
+}
+
+/* 소셜 로그인 버튼 스타일 */
+.socialLogins {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.kakaoButton,
+.naverButton {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.kakaoButton {
+    background-color: #fee500;
+    color: #3c1e1e;
+}
+
+.naverButton {
+    background-color: #03c75a;
+    color: white;
+}
+
+.socialLogins button:hover {
+    opacity: 0.8;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .form {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .button {
+        font-size: 14px;
+    }
+
+    .socialLogins {
+        flex-direction: column;
+    }
+}
