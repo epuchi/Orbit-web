@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { useAuthModel } from '../model/index';
+import {useDispatch, useSelector} from 'react-redux';
+import { login } from '@/app/redux/authSlice';
 
 const LoginPage = () => {
     const { loginWithEmailPassword, loginWithGoogle, loginWithKakao } = useAuthModel();
     const [formData, setFormData] = useState({ email: '', password: '' });
     const navigate = useNavigate(); // react-router-dom의 useNavigate 훅 사용
+    const dispatch = useDispatch();
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+    // 이미 로그인된 경우, 로그인 페이지 접근 방지
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/planner', { replace: true });
+        }
+    }, [isAuthenticated, navigate]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -16,6 +27,16 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { email, password } = formData;
+
+        if (formData.email === 'test@example.com' && formData.password === '1') {
+            // Redux 상태에 로그인 설정
+            dispatch(login({ username: 'Test User', email: 'test@example.com' }));
+            alert('로그인 성공!');
+            navigate('/planner'); // 로그인 후 '/planner'로 이동
+            return;
+        } else {
+            alert('이메일 또는 비밀번호가 잘못되었습니다.');
+        }
 
         if (!email || !password) {
             alert('이메일과 비밀번호를 입력해주세요.');
@@ -55,6 +76,10 @@ const LoginPage = () => {
 
     const goToSignup = () => {
         navigate('/signup'); // 회원가입 페이지로 이동
+    };
+
+    const goToDashboard = () => {
+        navigate('/planner'); // 회원가입 페이지로 이동
     };
 
     return (
@@ -149,6 +174,10 @@ const LoginPage = () => {
                         회원가입
                     </button>
                 </div>
+                <button
+                onClick={goToDashboard}>
+                    테스트용
+                </button>
             </div>
         </GoogleOAuthProvider>
     );
