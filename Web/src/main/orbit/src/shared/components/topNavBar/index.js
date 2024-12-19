@@ -6,7 +6,7 @@ import globalStyle from '@/shared/style/global.css'
 import styles from './styles.module.css';
 import logo from '@/shared/assets/img/logo_icon.png';
 
-const Index = () => {
+const TopNavBar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -65,4 +65,4 @@ const Index = () => {
     );
 };
 
-export default Index;
+export default TopNavBar;

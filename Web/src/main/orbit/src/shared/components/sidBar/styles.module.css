@@ -1,0 +1,59 @@
+/* 사이드바 컨테이너 */
+.container {
+    background-color: lightgray;
+    width: 230px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 10px 0px 10px;
+}
+
+/* 프로젝트 스타일 */
+.project {
+    margin-bottom: 10px;
+}
+
+.projectText {
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    padding: 5px;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.projectText:hover {
+    color: #007bff; /* Hover 색상 */
+}
+
+/* 하위 카테고리 컨테이너 */
+.categoryContainer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    background-color: #f8f9fa;
+    border-left: 2px solid #ddd;
+    padding-left: 10px;
+}
+
+.categoryContainer.open {
+    max-height: 500px; /* 충분히 큰 값 */
+    opacity: 1;
+}
+
+/* 카테고리 항목 */
+.categoryItem {
+    display: block;
+    padding: 5px;
+    margin: 2px 0;
+    text-decoration: none;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.categoryItem:hover {
+    color: #007bff; /* Hover 색상 */
+}

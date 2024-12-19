@@ -8,7 +8,10 @@ import TodoListPage from '@/pages/todolist';
 import BoardPage from '@/pages/board';
 import AlarmPage from '@/pages/alarm';
 import ProtectedRoute from './ProtectedRoute';
-import Index from '@/shared/components/topNavBar';
+import NavBar from '@/shared/components/topNavBar';
+import SideBar from '@/shared/components/sidBar';
+import styles from './styles.module.css';
+import globalStyle from '@/shared/style/global.css'
 
 const AppRoutes = () => {
     const location = useLocation();
@@ -19,58 +22,62 @@ const AppRoutes = () => {
 
     return (
         <>
-            {/* 조건부 네비게이션 바 */}
-            {!shouldHideNavbar && <Index />}
+            {/* 상단 네비게이션 바 */}
+            {!shouldHideNavbar && <NavBar />}
+            <div className={styles.layoutContainer}>
+                {/* 왼쪽 사이드바 */}
+                {!shouldHideNavbar && <SideBar />}
+                <div className={styles.contentContainer}>
+                    <Routes>
+                        {/* 초기 경로 */}
+                        <Route path="/" element={<Navigate to="/login" />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/signup" element={<SignupPage />} />
 
-            <Routes>
-                {/* 초기 경로 */}
-                <Route path="/" element={<Navigate to="/login" />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignupPage />} />
-
-                {/* 인증된 사용자만 접근 */}
-                <Route
-                    path="/main"
-                    element={
-                        <ProtectedRoute>
-                            <MainPage />
-                        </ProtectedRoute>
-                    }
-                />
-
-                <Route
-                    path="/planner"
-                    element={
-                        <ProtectedRoute>
-                            <PlannerPage />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/todolist"
-                    element={
-                        <ProtectedRoute>
-                            <TodoListPage />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/board"
-                    element={
-                        <ProtectedRoute>
-                            <BoardPage />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/alarm"
-                    element={
-                        <ProtectedRoute>
-                            <AlarmPage />
-                        </ProtectedRoute>
-                    }
-                />
-            </Routes>
+                        {/* 인증된 사용자만 접근 */}
+                        <Route
+                            path="/main"
+                            element={
+                                <ProtectedRoute>
+                                    <MainPage />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/planner"
+                            element={
+                                <ProtectedRoute>
+                                    <PlannerPage />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/todolist"
+                            element={
+                                <ProtectedRoute>
+                                    <TodoListPage />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/board"
+                            element={
+                                <ProtectedRoute>
+                                    <BoardPage />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/alarm"
+                            element={
+                                <ProtectedRoute>
+                                    <AlarmPage />
+                                </ProtectedRoute>
+                            }
+                        />
+                    </Routes>
+                </div>
+            </div>
         </>
     );
 };
