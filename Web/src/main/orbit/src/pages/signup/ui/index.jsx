@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './styles.module.css';
+import {useNavigate} from "react-router-dom";
 
 const Signup = ({
                     formData,
@@ -13,6 +14,11 @@ const Signup = ({
                     codeSent,
                     emailVerified,
                 }) => {
+    const navigate = useNavigate();
+    const goToSignupP2 = () => {
+        navigate('/signupP2'); // 회원가입 인적사항 페이지로 이동
+    };
+
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>회원가입</h1>
@@ -86,11 +92,17 @@ const Signup = ({
                     required
                 />
 
-                <button type="submit" className={styles.button} disabled={loading || !emailVerified}>
+                <button
+                    type="submit"
+                    className={styles.button}
+                    disabled={loading || !emailVerified}>
                     {loading ? '회원가입 중...' : '회원가입'}
                 </button>
+
+                <button onClick={goToSignupP2}>임시</button>
             </form>
             {success && <p className={styles.success}>회원가입 성공!</p>}
+            {success && <p>{goToSignupP2}</p>}
             {error && <p className={styles.error}>{error}</p>}
         </div>
     );

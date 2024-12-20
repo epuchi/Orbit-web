@@ -1,18 +1,55 @@
 import axios from 'axios';
 
 // 이메일/비밀번호 로그인 API 호출
+// export const loginWithEmailPassword = async (email, password) => {
+//     const response = await axios.post('http://34.64.173.72:3000/api/auth/login', { email, password });
+//     return response.data; // 로그인 성공 시 사용자 데이터 반환
+// };
+
 export const loginWithEmailPassword = async (email, password) => {
-    const response = await axios.post('http://localhost:8080/api/auth/login', { email, password });
-    return response.data; // 로그인 성공 시 사용자 데이터 반환
+    const requestBody = {
+        email: email,    // 사용자 이메일
+        password: password // 사용자 비밀번호
+    };
+
+    const response = await axios.post(
+        'http://34.64.173.72:8090/api/auth/login',
+        requestBody,
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+
+    return response.data;
+};
+// 구글 로그인
+export const loginWithGoogle = async (googleToken) => {
+    const requestBody = {
+        googleToken: googleToken
+    };
+
+    const response = await axios.post(
+        'http://34.64.173.72:8090/api/auth/login',
+        requestBody,
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    return response.data;
 };
 
 // 구글 로그인 API 호출
-export const loginWithGoogle = async (googleToken) => {
-    const response = await axios.post('${API_BASE_URL}/google-signup', { token: googleToken }, {
-        headers: { 'Content-Type': 'application/json' },
-    });
-    return response.data;
-};
+// export const loginWithGoogle = async (googleToken) => {
+//     const response = await axios.post('${API_BASE_URL}/google-signup', { token: googleToken }, {
+//         headers: { 'Content-Type': 'application/json' },
+//     });
+//     return response.data;
+// };
+
 
 // 카카오 로그인 API 호출
 export const loginWithKakao = () => {
@@ -37,7 +74,7 @@ export const loginWithKakao = () => {
         }
 
         window.Kakao.Auth.authorize({
-            redirectUri: 'http://localhost:3000/oauth/callback/kakao', // 리다이렉트 URI
+            redirectUri: 'http://34.64.173.72:3000/api/auth/login', // 리다이렉트 URI
         });
 
         console.log('Redirecting to Kakao login...');

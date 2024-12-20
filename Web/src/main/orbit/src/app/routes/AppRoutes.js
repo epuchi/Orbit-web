@@ -9,12 +9,14 @@ import BoardPage from '@/pages/board';
 import AlarmPage from '@/pages/alarm';
 import ProtectedRoute from './ProtectedRoute';
 import Index from '@/shared/components/topNavBar';
+import SignupDetailsPage from '@/pages/signupP2';
+
 
 const AppRoutes = () => {
     const location = useLocation();
 
     // 네비게이션 바를 숨길 경로 설정
-    const hideNavbarRoutes = ['/login', '/signup'];
+    const hideNavbarRoutes = ['/login', '/signup', '/signupP2'];
     const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
     return (
@@ -27,6 +29,7 @@ const AppRoutes = () => {
                 <Route path="/" element={<Navigate to="/login" />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
+                <Route path="/signupP2" element={<SignupDetailsPage />} />
 
                 {/* 인증된 사용자만 접근 */}
                 <Route
