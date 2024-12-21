@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 //일반 회원가입 api
 export const signup = async (formData) => {
     const response = await axios.post(`${"http://localhost:8080/api"}/signup`, formData, {

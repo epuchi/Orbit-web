@@ -1,9 +1,11 @@
 import authApi from '../api/index';
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 
-// Your web app's Firebase configuration
+/**
+ * Firebase 설정 (app 변수를 사용하지 않으면 할당 생략)
+ */
 const firebaseConfig = {
-    apiKey: "AIzaSyAfGC_Ks-MwsgtqQrVKfC9iOdq25Fpj1Hc",
+    apiKey: "AIzaSyAfGC_Ks-MwsgtQrVKfC9iOdq25Fpj1Hc",
     authDomain: "orbit-bbc8f.firebaseapp.com",
     projectId: "orbit-bbc8f",
     storageBucket: "orbit-bbc8f.firebasestorage.app",
@@ -11,10 +13,15 @@ const firebaseConfig = {
     appId: "1:1020053061294:web:1bfdc7f2c59133689e373f"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
+// app 변수가 필요 없다면 이렇게만 호출해도 됨
 
-export const useAuthModel = () => {
+/**
+ * useAuthModel 함수 선언문
+ * - 화살표 함수가 아니라 'function' 선언문을 쓰면 호이스팅되어
+ *   import 시 초기화 순서 문제 없이 참조 가능
+ */
+export function useAuthModel() {
     // 이메일/비밀번호 로그인
     const loginWithEmailPassword = async (email, password) => {
         try {
@@ -50,9 +57,10 @@ export const useAuthModel = () => {
         }
     };
 
+    // 훅이 반환할 메서드들
     return {
         loginWithEmailPassword,
         loginWithGoogle,
         loginWithKakao,
     };
-};
+}

@@ -1,54 +1,101 @@
 import axios from 'axios';
 
-// 이메일/비밀번호 로그인 API 호출
-export const loginWithEmailPassword = async (email, password) => {
-    const response = await axios.post('http://localhost:8080/api/auth/login', { email, password });
-    return response.data; // 로그인 성공 시 사용자 데이터 반환
-};
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
-// 구글 로그인 API 호출
-export const loginWithGoogle = async (googleToken) => {
-    const response = await axios.post('${API_BASE_URL}/google-signup', { token: googleToken }, {
-        headers: { 'Content-Type': 'application/json' },
-    });
-    return response.data;
-};
+/**
+ * 이메일/비밀번호 로그인
+ * @param {string} email 사용자 이메일
+ * @param {string} password 사용자 비밀번호
+ * @returns {Object} 서버 응답 데이터 (예: { token, user } 등)
+ */
+async function loginWithEmailPassword(email, password) {
+    try {
+        const requestBody = { email, password };
+        const response = await axios.post(
+            `${baseURL}/api/auth/login`,
+            requestBody,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
 
-// 카카오 로그인 API 호출
-export const loginWithKakao = () => {
+        // 서버 응답에서 성공 여부를 확인
+        if (!response.data.success) {
+            throw new Error(response.data.message || '로그인 실패');
+        }
+
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || '로그인 요청에 실패했습니다.';
+    }
+}
+
+
+/**
+ * 구글 로그인
+ * @param {string} googleToken 구글에서 받은 credential
+ * @returns {Object} 서버 응답 데이터
+ */
+async function loginWithGoogle(googleToken) {
+    try {
+        const response = await axios.post(
+            `${baseURL}/api/auth/login`,
+            { token: googleToken },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+
+        // 서버 응답에서 성공 여부 확인
+        if (!response.data.success) {
+            throw new Error(response.data.message || '구글 로그인 실패');
+        }
+
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || '구글 로그인 요청에 실패했습니다.';
+    }
+}
+
+
+/**
+ * 카카오 로그인 - 카카오 SDK를 사용해 리다이렉트
+ * (실제 인증 처리는 백엔드의 /api/auth/login 에서 인가코드 받아 진행)
+ */
+function loginWithKakao() {
     try {
         const kakaoKey = process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY;
 
         if (!kakaoKey) {
-            alert('카카오 앱 키가 설정되지 않았습니다. 관리자에게 문의하세요.');
-            console.error('Kakao JavaScript key is missing.');
-            return;
+            throw new Error('카카오 앱 키가 설정되지 않았습니다.');
         }
 
         if (!window.Kakao) {
-            alert('카카오 SDK가 로드되지 않았습니다. 페이지를 새로고침 후 다시 시도해주세요.');
-            console.error('Kakao SDK is not loaded.');
-            return;
+            throw new Error('카카오 SDK가 로드되지 않았습니다.');
         }
 
         if (!window.Kakao.isInitialized()) {
             window.Kakao.init(kakaoKey);
-            console.log('Kakao SDK initialized.');
         }
 
+        // 리다이렉션을 통해 카카오 로그인 처리
         window.Kakao.Auth.authorize({
-            redirectUri: 'http://localhost:3000/oauth/callback/kakao', // 리다이렉트 URI
+            redirectUri: `${baseURL}/api/auth/login`,
         });
 
         console.log('Redirecting to Kakao login...');
     } catch (error) {
         console.error('Kakao Login Failed:', error.message);
-        alert('카카오 로그인에 실패했습니다. 다시 시도해주세요.');
+        alert(error.message || '카카오 로그인에 실패했습니다. 다시 시도해주세요.');
     }
-};
+}
 
 
-// 통합 로그인 API
+// export 한 객체를 다른 파일에서 import해서 사용
 const authApi = {
     loginWithEmailPassword,
     loginWithGoogle,
