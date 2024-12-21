@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 
 const MainPage = () => {
     const userName = '류웨이';
-    const [myProject, setMyProject] = useState([]);
+    const [myProject, setMyProject] = useState(['project1', 'project2','project1', 'project2','project1', 'project2']);
     const projectViewRef = useRef(null);
 
     const handleAddProject = () => {

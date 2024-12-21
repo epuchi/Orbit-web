@@ -97,13 +97,12 @@
     background-color: var(--card-bg);
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     position: relative;
-    max-width: 1100px;
+    max-width: 1200px;
     min-height: 150px;
 }
 
 .projectViewArea {
     display: inline-flex;
-    gap: 10px;
     padding: 10px;
     width: 100%;
 }
@@ -121,6 +120,7 @@
     justify-content: center;
     align-items: center;
     padding: 10px;
+    margin: 0 5px 0 5px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
