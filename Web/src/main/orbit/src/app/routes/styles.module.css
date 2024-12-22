@@ -1,0 +1,20 @@
+/* 전체 레이아웃을 감싸는 컨테이너 */
+.layoutContainer {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 100px); /* 네비게이션 바 높이를 뺀 나머지 */
+    width: 100%;
+}
+
+/* 사이드바 */
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* 메인 컨텐츠 */
+.contentContainer {
+    flex: 1;
+    display: flex;
+}
