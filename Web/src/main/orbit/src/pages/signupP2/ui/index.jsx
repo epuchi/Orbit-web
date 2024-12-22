@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // 리디렉션을 위한 useNavigate 훅
 import styles from './styles.module.css';
+import { signupProfile } from '../api';
 
-const SignupDescription = ({ handleSubmit }) => {
+const SignupDescription = () => {
     const [formData, setFormData] = useState({
-        profilePicture: null,
+        profilePicture: '',
         nickname: '',
         birthdate: '',
-        phoneNumber: '' // 휴대폰 번호 추가
+        phoneNumber: '',
+        jobDescription: ''
     });
     const [preview, setPreview] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState('');
+
+    const navigate = useNavigate(); // useNavigate 훅 사용
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,18 +26,31 @@ const SignupDescription = ({ handleSubmit }) => {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setFormData({ ...formData, profilePicture: file });
             const reader = new FileReader();
             reader.onload = () => {
+                setFormData({ ...formData, profilePicture: reader.result });
                 setPreview(reader.result);
             };
             reader.readAsDataURL(file);
         }
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
-        handleSubmit(formData);
+        setLoading(true);
+        setError('');
+        setSuccess(false);
+
+        try {
+            await signupProfile(formData);
+            setSuccess(true);
+            alert('프로필 설정이 완료되었습니다. 로그인 페이지로 이동합니다.');
+            navigate('/login'); // 성공 시 로그인 페이지로 이동
+        } catch (err) {
+            setError('프로필 설정 저장에 실패했습니다.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -75,20 +96,26 @@ const SignupDescription = ({ handleSubmit }) => {
                     className={styles.input}
                     value={formData.phoneNumber}
                     onChange={handleChange}
-                    placeholder="010-1234-5678" // 예제 형식 추가
-                    pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" // 기본 패턴 검증
+                    placeholder="010-1234-5678"
                     required
                 />
-                <button type="submit" className={styles.button}>
-                    저장
+                <label className={styles.label}>업무/직종</label>
+                <input
+                    type="text"
+                    name="jobDescription"
+                    className={styles.input}
+                    value={formData.jobDescription}
+                    onChange={handleChange}
+                    placeholder="예: 개발자, 디자이너, 마케팅 등"
+                />
+                <button type="submit" className={styles.button} disabled={loading}>
+                    {loading ? '저장 중...' : '저장'}
                 </button>
+                {success && <p className={styles.success}>프로필 설정이 저장되었습니다!</p>}
+                {error && <p className={styles.error}>{error}</p>}
             </form>
         </div>
     );
 };
 
 export default SignupDescription;
-
-
-
-
