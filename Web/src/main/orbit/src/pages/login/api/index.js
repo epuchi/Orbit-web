@@ -10,7 +10,10 @@ const baseURL = process.env.REACT_APP_API_BASE_URL;
  */
 async function loginWithEmailPassword(email, password) {
     try {
-        const requestBody = { email, password };
+        const requestBody = {
+            email: email,    // 사용자 이메일
+            password: password // 사용자 비밀번호
+        };
         const response = await axios.post(
             `${baseURL}/api/auth/login`,
             requestBody,
@@ -20,6 +23,8 @@ async function loginWithEmailPassword(email, password) {
                 },
             }
         );
+
+        console.log('response : ' + response)
 
         // 서버 응답에서 성공 여부를 확인
         if (!response.data.success) {

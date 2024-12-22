@@ -1,14 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import styles from './styles.module.css';
+import { useMainModel } from "@/pages/main/model";
+import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
-    const userName = '류웨이';
-    const [myProject, setMyProject] = useState(['project1', 'project2','project1', 'project2','project1', 'project2']);
+    const navigate = useNavigate();
+    const { userInfo, projectInfo, toDoListInfo } = useMainModel();
+    const userName = userInfo();
+    const myProject = projectInfo();
+    const toDoList = toDoListInfo();
     const projectViewRef = useRef(null);
-
-    const handleAddProject = () => {
-
-    };
 
     const scrollLeft = () => {
         if (projectViewRef.current) {
@@ -20,6 +21,14 @@ const MainPage = () => {
         if (projectViewRef.current) {
             projectViewRef.current.scrollBy({ left: 200, behavior: 'smooth' });
         }
+    };
+
+    const goToTodoList = () => {
+        navigate('/todolist');
+    };
+
+    const goToPlanner = () => {
+        navigate('/planner');
     };
 
     return (
@@ -45,7 +54,7 @@ const MainPage = () => {
                         ) : (
                             <div className={styles.noProjectContainer}>
                                 <div className={styles.noProjectMessage}>
-                                    참여중인 프로젝트가 없으시군요! <br/> 프로젝트를 생성해보세요!
+                                    참여중인 프로젝트가 없으시군요! <br /> 프로젝트를 생성해보세요!
                                 </div>
                             </div>
                         )}
@@ -58,14 +67,33 @@ const MainPage = () => {
                 <div className={styles.toDoList}>
                     <div className={styles.toDoHeader}>
                         <span>Todo List</span>
-                        <button className={styles.navButton}>&gt;</button>
+                        <button className={styles.navButton} onClick={goToTodoList}>&gt;</button>
                     </div>
-                    {/* Todo List 내용 추가 */}
+                    <div className={styles.scrollableList}>
+                        {toDoList.length > 0 ? (
+                            toDoList.map((item, index) => (
+                                <div key={index} className={styles.todoItem}>
+                                    <input
+                                        type="checkbox"
+                                        checked={item.onCheck === 1}
+                                        readOnly
+                                    />
+                                    <div className={styles.todoText}>
+                                        <span className={styles.todoTitle}>{item.title}</span>
+                                        <p className={styles.todoContent}>{item.content}</p>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <span>할 일이 없습니다!</span>
+                        )}
+                    </div>
                 </div>
+
                 <div className={styles.toDoList}>
                     <div className={styles.toDoHeader}>
                         <span>내 일정</span>
-                        <button className={styles.navButton}>&gt;</button>
+                        <button className={styles.navButton} onClick={goToPlanner}>&gt;</button>
                     </div>
                     {/* 일정 내용 추가 */}
                 </div>
