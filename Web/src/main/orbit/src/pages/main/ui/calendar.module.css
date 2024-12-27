@@ -1,0 +1,174 @@
+:root {
+    /* 색상 변수 */
+    --calendar-bg: #ffffff; /* 달력 배경 색상 */
+    --calendar-text: #2980b9; /* 달력 텍스트 색상 */
+    --calendar-border: #e0e0e0; /* 달력 테두리 색상 */
+
+    /* 일정 색상 */
+    --event-text: #000; /* 일정 텍스트 색상 */
+    --event-default: #6a5af9; /* 기본 일정 배경 색상 */
+    --event-hover: #4a4acf; /* 일정 호버 배경 색상 */
+
+    /* 툴팁 색상 */
+    --tooltip-bg: #ffffff; /* 툴팁 배경 색상 */
+    --tooltip-text: #000000; /* 툴팁 텍스트 색상 */
+    --tooltip-border: #e0e0e0; /* 툴팁 테두리 색상 */
+
+    /* 폰트 크기와 굵기 */
+    --font-size-large: 20px; /* 큰 텍스트 크기 */
+    --font-size-medium: 16px; /* 중간 텍스트 크기 */
+    --font-size-small: 14px; /* 작은 텍스트 크기 */
+    --font-weight-bold: 600; /* 굵은 텍스트 */
+    --font-weight-normal: 400; /* 일반 텍스트 */
+}
+
+/* 달력 전체 Wrapper 스타일 */
+.calendarWrapper {
+    background-color: var(--calendar-bg);
+    min-height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* 달력 헤더 스타일 */
+.calendarHeader {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendarHeader > span {
+    color: var(--calendar-text);
+    font-size: var(--font-size-large);
+    font-weight: var(--font-weight-bold);
+}
+
+/* 네비게이션 버튼 스타일 */
+.navigateButton {
+    background-color: var(--calendar-text);
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.navigateButton > a {
+    font-size: var(--font-size-medium);
+    color: #fff;
+}
+
+/* 요일 헤더 스타일 */
+.weekDaysHeader {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 8px;
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    color: var(--calendar-text);
+}
+
+.weekDay {
+    background-color: var(--calendar-bg);
+    padding: 5px;
+    border-radius: 4px;
+    color: var(--calendar-text);
+    border: 1px solid var(--calendar-border);
+}
+
+/* 달력 본문 스타일 */
+.calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendarCell {
+    background-color: var(--calendar-bg);
+    border: 1px solid var(--calendar-border);
+    border-radius: 4px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendarDate {
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-bold);
+    align-self: flex-end;
+    color: var(--calendar-text);
+    margin: 0 5px 3px 0;
+}
+
+/* 일정 박스 스타일 */
+.eventBox {
+    position: relative;
+    border-radius: 4px;
+    padding: 3px;
+    margin-bottom: 5px;
+    font-size: var(--font-size-small);
+    color: var(--event-text);
+    background-color: var(--event-default);
+    transition: background-color 0.3s;
+}
+
+.eventBox:hover {
+    background-color: var(--event-hover);
+}
+
+/* 다일 일정 스타일 */
+.eventStart {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-right: -1px;
+    border-right: none;
+}
+
+.eventMiddle {
+    border-radius: 0;
+    margin-left: -1px;
+    margin-right: -1px;
+    border-left: none;
+    border-right: none;
+}
+
+.eventEnd {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: -1px;
+    border-left: none;
+}
+
+.eventSingle {
+    border-radius: 4px;
+}
+
+/* 일정 이름 스타일 */
+.eventName {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-small);
+}
+
+/* 일정 툴팁 스타일 */
+.eventTimeTooltip {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 4px;
+    font-size: var(--font-size-small);
+    color: var(--tooltip-text);
+    background-color: var(--tooltip-bg);
+    border: 1px solid var(--tooltip-border);
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 4px;
+    z-index: 999;
+}
+
+.eventBox:hover .eventTimeTooltip {
+    display: block;
+}
