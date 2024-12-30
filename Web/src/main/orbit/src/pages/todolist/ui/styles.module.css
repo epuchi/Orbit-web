@@ -1,26 +1,23 @@
-/* 전체 레이아웃 */
 .mainContainer {
     display: flex;
-    justify-content: space-between; /* 좌우 배치 */
+    justify-content: space-between;
     align-items: flex-start;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
     padding: 20px;
 }
-
-/* 투두 리스트 영역 */
+  
 .todoContainer {
-    width: 60%; /* 투두 영역 너비 */
+    width: 70%;
     box-sizing: border-box;
     display: flex;
-    flex-direction: column; /* 세로 정렬 */
-    gap: 20px; /* 필드 간 간격 */
+    flex-direction: column;
+    gap: 20px;
     font-family: 'Arial', sans-serif;
     margin-left: 10%;
 }
-
-/* 헤더 스타일 */
+  
 .head {
     margin: 0;
     padding: 10px 0;
@@ -28,16 +25,27 @@
     font-weight: bold;
     text-align: left;
 }
-
-/* 입력 필드 컨테이너 */
+  
 .inputContainer {
     display: flex;
-    flex-direction: column; /* 세로 정렬 */
+    flex-direction: column;
     gap: 15px;
     width: 100%;
 }
-
-/* 입력 필드 스타일 */
+  
+.fixedTask {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    margin-left: 20px;
+    padding: 3px;
+}
+  
 .inputField {
     width: 100%;
     border: none;
@@ -47,59 +55,235 @@
     padding: 10px 5px;
     background-color: #f9f9f9;
 }
-
+  
 .inputField:focus {
     border-bottom: 2px solid #007bff;
 }
-
+  
 .inputField::placeholder {
     color: #aaa;
 }
-
-/* 날짜 표시 컨테이너 */
+  
+.smallInputField {
+    width: calc(100% - 40px);
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 14px;
+    padding: 5px;
+    background-color: #f9f9f9;
+    margin-left: 20px;
+}
+  
+.smallInputField:focus {
+    border-bottom: 1px solid #007bff;
+}
+  
+.smallInputWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0;
+    padding-left: 20px;
+    position: relative;
+    width: 100%;
+}
+  
+.smallInputWrapper:not(.fixedTask)::before {
+    content: "•";
+    font-size: 18px;
+    color: #007bff;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+  
 .dateDisplayContainer {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     margin-top: 10px;
 }
-
-/* 날짜 표시 스타일 */
+  
 .dateDisplay {
     font-size: 14px;
     font-weight: bold;
     color: #000;
 }
-
-
-/* 캘린더 컨테이너 스타일 */
+  
 .calendarContainer {
-    background-color: #f0f0f0; /* 연한 회색 배경 */
-    border-radius: 16px; /* 둥근 모서리 */
-    padding: 20px; /* 내부 여백 */
-    margin: 20px; /* 외부 여백 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 연한 그림자 */
-    min-height: 500px; /* 최소 높이 설정 (조정 가능) */
-    height: auto; /* 자동 높이 설정 (내용에 맞게 늘어남) */
+    background-color: #f0f0f0;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 500px;
+    height: auto;
+    width: 35%;
 }
-
-/* 캘린더 제목 */
+  
+.todosContainer {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+  
+.todoItem {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+  
+.todoItem h3 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #333;
+}
+  
+.additionalTasks {
+    list-style-type: none;
+    padding-left: 15px;
+    margin: 10px 0;
+}
+  
+.additionalTasks li {
+    margin: 5px 0;
+    color: #666;
+    font-size: 14px;
+}
+  
+.todoDescription {
+    margin: 10px 0;
+    color: #555;
+    font-size: 14px;
+}
+  
+.todoTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+}
+  
+.todoTag {
+    color: #666;
+    font-size: 12px;
+    background-color: #f5f5f5;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+  
+.submitButton {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
+.submitButton:hover {
+    background-color: #0056b3;
+}
+  
 .calendarTitle {
     font-size: 16px;
     font-weight: bold;
     text-align: center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
+.addButton {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
+.addButton:hover {
+    background-color: #0056b3;
+}
+  
+.inputWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+  
+.checkButton {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #007bff;
+    cursor: pointer;
+}
+  
+.checkButton:hover {
+    color: #0056b3;
+}
+  
+.fixedTag {
+    color: #666;
+    font-size: 14px;
+    padding: 5px;
+    margin-left: 5px;
+}
+  
+.tagsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+  
+.tagInputWrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+  
+.tagInput {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+    padding: 5px;
+    background-color: #f9f9f9;
+}
+  
+.tagInput:focus {
+    border-bottom: 1px solid #007bff;
+}
+  
+.tagAddButton {
+    font-size: 12px;
+    padding: 5px 10px;
+}
+  
+.submitButton {
+    width: fit-content;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: auto;
+    display: block;
+}
 
