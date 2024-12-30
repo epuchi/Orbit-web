@@ -21,3 +21,20 @@ export const signupProfile = async (formData) => {
     return response.data; // 서버 응답 데이터 반환
 };
 
+export const cancelSignup = async (email) => {
+    const requestBody = {
+        email: email // 이메일 정보
+    };
+
+    const response = await axios.post(
+        'http://34.64.173.72:8090/api/auth/cancel-signup', // API 엔드포인트
+        requestBody,
+        {
+            headers: {
+                'Content-Type': 'application/json' // JSON 데이터 형식
+            }
+        }
+    );
+
+    return response.data; // 서버 응답 데이터 반환
+};

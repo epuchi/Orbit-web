@@ -111,6 +111,7 @@ const SignupDescription = () => {
                 <button type="submit" className={styles.button} disabled={loading}>
                     {loading ? '저장 중...' : '저장'}
                 </button>
+
                 {success && <p className={styles.success}>프로필 설정이 저장되었습니다!</p>}
                 {error && <p className={styles.error}>{error}</p>}
             </form>
