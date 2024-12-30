@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const baseURL = process.env.REACT_APP_API_BASE_URL;
+import REACT_APP_API_BASE_URL from '@/shared/assets/uri'
+const baseURL = REACT_APP_API_BASE_URL;
 
 //일반 회원가입 api
 // export const signup = async (formData) => {
@@ -17,7 +17,7 @@ export const signup = async (formData) => {
     };
 
     const response = await axios.post(
-        'http://34.64.173.72:8090/api/auth/login',
+        'http://34.64.173.72:8090/api/auth/signup',
         requestBody,
         {
             headers: {
@@ -42,7 +42,7 @@ export const sendVerificationCode = async (email) => {
     };
 
     const response = await axios.post(
-        'http://34.64.173.72:8090/api/auth/login',
+        'http://34.64.173.72:8090/api/auth/signup',
         requestBody,
         {
             headers: {
@@ -68,7 +68,7 @@ export const verifyEmailCode = async (email, code) => {
     };
 
     const response = await axios.post(
-        'http://34.64.173.72:8090/api/auth/login',
+        'http://34.64.173.72:8090/api/auth/signup',
         requestBody,
         {
             headers: {
