@@ -98,25 +98,53 @@ export function useMainModel() {
         },
     ];
 
+    const alarm = [
+        {
+            id: 123123,
+            name: 'UI 개발',
+            type: '개발',
+            summation: '메인페이지, 캘린더, 투두 리스트 UI 개발'
+        },
+        {
+            id: 123123,
+            name: 'UI 개발',
+            type: '개발',
+            summation: '메인페이지, 캘린더, 투두 리스트 UI 개발'
+        },
+    ]
 
-    // 달력의 날짜 배열 생성
+
     const getCalendarDates = () => {
         const today = new Date();
-        const start = new Date(today);
-        const end = new Date(today);
+        const start = new Date(today); // 오늘 날짜를 기준으로
 
+        // 현재 주의 첫 번째 날(일요일)로 설정
         start.setDate(today.getDate() - today.getDay());
-        end.setDate(start.getDate() + 13);
+
+        const end = new Date(start); // 종료일
+
+        // 종료일을 13일 뒤로 설정 (2주 범위)
+        const endDate = start.getDate() + 13
+        end.setDate(endDate);
 
         const dates = [];
         let current = new Date(start);
+
+        // 정확히 2주(14일)까지만 날짜 추가
         while (current <= end) {
             const iso = current.toISOString().split("T")[0];
             dates.push(iso);
-            current.setDate(current.getDate() + 1);
+            current.setDate(current.getDate() + 1); // 다음 날로 이동
         }
+
+        // 디버깅 로그
+        console.log('Start Date:', start);
+        console.log('End Date:', end);
+        console.log("Generated Calendar Dates:", dates);
+
         return dates;
     };
+
 
     // 특정 날짜에 해당하는 일정 필터링
     const getSchedulesByDate = (dateStr) =>
@@ -132,18 +160,20 @@ export function useMainModel() {
         return "middle";
     };
 
-    const userInfo = () => userName;
-    const projectInfo = () => myProject;
-    const toDoListInfo = () => toDoList;
-    const plannerInfo = () => planner;
+    const userData = () => userName;
+    const projectData = () => myProject;
+    const toDoListData = () => toDoList;
+    const plannerData = () => planner;
+    const alarmData = () => alarm;
 
     return {
-        userInfo,
-        projectInfo,
-        toDoListInfo,
-        plannerInfo,
+        userData,
+        projectData,
+        toDoListData,
+        plannerData,
         getCalendarDates,
         getSchedulesByDate,
         getDayType,
+        alarmData
     };
 }

@@ -1,6 +1,7 @@
 import axios from 'axios';
+import REACT_APP_API_BASE_URL, { KAKAO_JAVASCRIPT_KEY } from '@/shared/assets/uri'; // KAKAO_JAVASCRIPT_KEY 가져오기
 
-const baseURL = process.env.REACT_APP_API_BASE_URL;
+const baseURL = REACT_APP_API_BASE_URL;
 
 /**
  * 이메일/비밀번호 로그인
@@ -73,7 +74,7 @@ async function loginWithGoogle(googleToken) {
  */
 function loginWithKakao() {
     try {
-        const kakaoKey = process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY;
+        const kakaoKey = KAKAO_JAVASCRIPT_KEY;
 
         if (!kakaoKey) {
             throw new Error('카카오 앱 키가 설정되지 않았습니다.');

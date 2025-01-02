@@ -1,22 +1,63 @@
 .alarmContainer {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
-    gap: 20px;
-    padding-top: 20px;
+    flex: 1;
     background-color: #fff;
+    min-height: var(--section-min-height);
+}
+
+.topArea {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: calc(10% - 1px);
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border-bottom: 1px solid #bdbdbd;
 }
 
 .alarmTitle {
-    padding-left: 20px;
-    font-size: 18px;
+    text-align: center;
+    font-size: 22px;
     font-weight: 600;
     color: var(--main-color);
-    margin: 0;
+    padding-bottom: 10px;
 }
 
-.alarmText {
+.alarmItem {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-self: center;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    border: 1px solid #e4e4e4;
+    box-shadow: 3px 3px 3px rgba(151, 151, 151, 0.3);
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.alarmName {
+    padding-left: 5px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.alarmType {
+    padding-left: 5px;
+    font-size: 14px;
+    color: #007BFFFF;
+}
+
+.alarmSummation {
+    padding-left: 5px;
+    font-size: 14px;
+    color: black;
+}
+
+.nullAlarmText {
     padding-left: 20px;
     font-size: 16px;
     color: var(--text-color);

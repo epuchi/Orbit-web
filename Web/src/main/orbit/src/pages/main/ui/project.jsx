@@ -4,8 +4,8 @@ import { useMainModel } from "../model";
 import { useNavigate } from "react-router-dom";
 
 const Project = () => {
-    const { projectInfo } = useMainModel();
-    const myProjects = projectInfo();
+    const { projectData } = useMainModel();
+    const myProjects = projectData();
 
     const projectScrollRef = useRef(null);
 

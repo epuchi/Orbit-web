@@ -46,6 +46,7 @@
     height: var(--section-header-height);
     align-items: center;
     justify-content: center;
+    border-bottom: 1px solid #bdbdbd;
 }
 
 .section_header_text {
@@ -62,7 +63,6 @@
     width: 100%;
     height: var(--section-body-height);
     align-items: center;
-    border: 1px solid var(--border-color);
     border-radius: 8px;
 }
 
@@ -102,8 +102,6 @@
     width: var(--aside-width);
     min-width: var(--aside-min-width);
     background-color: var(--card-bg);
-    border-left: 1px solid var(--border-color);
-    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.05);
     justify-content: flex-start;
     align-items: center;
 }

@@ -9,8 +9,8 @@ import Alarm from "./alarm"
 const MainPage = () => {
 
     // 모델에서 사용자 정보, 프로젝트, 투두 리스트 가져오기
-    const { userInfo } = useMainModel();
-    const userName = userInfo();
+    const { userData } = useMainModel();
+    const userName = userData();
 
 
 

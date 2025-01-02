@@ -8,8 +8,8 @@ const TodoList = () => {
     const navigate = useNavigate();
 
     // 모델에서 투두 리스트 가져오기
-    const {toDoListInfo} = useMainModel();
-    const toDoList = toDoListInfo();
+    const {toDoListData} = useMainModel();
+    const toDoList = toDoListData();
 
     // 투두 리스트 페이지로 이동
     const goToTodoList = () => {
