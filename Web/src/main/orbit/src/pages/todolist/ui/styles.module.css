@@ -287,3 +287,18 @@
     display: block;
 }
 
+.offlineAlert {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
