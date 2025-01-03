@@ -1,4 +1,6 @@
 import React from 'react';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GOOGLE_CLIENT_ID } from '@/shared/assets/uri';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import LoginPage from '@/pages/login/index';
 import SignupPage from '@/pages/signup';
@@ -21,7 +23,7 @@ const AppRoutes = () => {
     const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
     return (
-        <>
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
             {/* 상단 네비게이션 바 */}
             {!shouldHideNavbar && <NavBar />}
             <div className={styles.layoutContainer}>
@@ -79,7 +81,7 @@ const AppRoutes = () => {
                     </Routes>
                 </div>
             </div>
-        </>
+        </GoogleOAuthProvider>
     );
 };
 

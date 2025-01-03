@@ -101,6 +101,20 @@ export function useMainModel() {
     const alarm = [
         {
             id: 123123,
+            name: "문서 수정 요청",
+            project: "Orbit",
+
+        },
+        {
+            id: 123123,
+            name: "일정 추가",
+            project: "Orbit",
+
+        },
+    ]
+    const board = [
+        {
+            id: 123123,
             name: 'UI 개발',
             type: '개발',
             summation: '메인페이지, 캘린더, 투두 리스트 UI 개발'
@@ -164,6 +178,7 @@ export function useMainModel() {
     const projectData = () => myProject;
     const toDoListData = () => toDoList;
     const plannerData = () => planner;
+    const boardData = () => board;
     const alarmData = () => alarm;
 
     return {
@@ -174,6 +189,7 @@ export function useMainModel() {
         getCalendarDates,
         getSchedulesByDate,
         getDayType,
+        boardData,
         alarmData
     };
 }

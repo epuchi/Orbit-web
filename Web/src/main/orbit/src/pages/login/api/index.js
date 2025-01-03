@@ -47,7 +47,7 @@ async function loginWithEmailPassword(email, password) {
 async function loginWithGoogle(googleToken) {
     try {
         const response = await axios.post(
-            `${baseURL}/api/auth/login`,
+            `${baseURL}/api/auth/googlelogin`,
             { token: googleToken },
             {
                 headers: {
