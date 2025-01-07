@@ -34,12 +34,13 @@ const LoginPage = () => {
 
         try {
             const userData = await loginWithEmailPassword(email, password);
-            if (!userData.token) {
-                throw new Error('로그인 실패: 유효한 토큰 없음');
+            if (userData === 1) {
+                dispatch(login(userData));
+                alert('로그인 성공!');
+                navigate('/planner');
+            } else {
+                console.log('userData' + userData);
             }
-            dispatch(login(userData));
-            alert('로그인 성공!');
-            navigate('/planner');
         } catch (error) {
             console.error('Login Failed:', error);
             alert(error.message || '로그인에 실패했습니다.');

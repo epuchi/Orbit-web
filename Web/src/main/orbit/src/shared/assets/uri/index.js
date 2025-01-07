@@ -1,4 +1,4 @@
-const REACT_APP_API_BASE_URL = 'http://34.64.173.72:8090';
+const REACT_APP_API_BASE_URL = 'http://orbit-app.net:8090';
 
 export default REACT_APP_API_BASE_URL;
 

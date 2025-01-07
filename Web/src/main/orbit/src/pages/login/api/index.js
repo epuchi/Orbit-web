@@ -1,5 +1,5 @@
 import axios from 'axios';
-import REACT_APP_API_BASE_URL, { KAKAO_JAVASCRIPT_KEY } from '@/shared/assets/uri'; // KAKAO_JAVASCRIPT_KEY 가져오기
+import REACT_APP_API_BASE_URL, {KAKAO_JAVASCRIPT_KEY} from '@/shared/assets/uri'; // KAKAO_JAVASCRIPT_KEY 가져오기
 
 const baseURL = REACT_APP_API_BASE_URL;
 
@@ -9,14 +9,42 @@ const baseURL = REACT_APP_API_BASE_URL;
  * @param {string} password 사용자 비밀번호
  * @returns {Object} 서버 응답 데이터 (예: { token, user } 등)
  */
+// async function loginWithEmailPassword(email, password) {
+//     try {
+//         const requestBody = {
+//             email: email,    // 사용자 이메일
+//             password: password // 사용자 비밀번호
+//         };
+//         console.log(requestBody);
+//         console.log(`${baseURL}`)
+//         const response = await axios.post(
+//             `${baseURL}/api/auth/login`,
+//             requestBody,
+//             {
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                 },
+//             }
+//         );
+//         console.log(response);
+//
+//         console.log('response : ' + response.data)
+//         return response.data;
+//
+//     } catch (error) {
+//         console.log('에러 메세지');
+//         console.log(error);
+//         console.log(error.response);
+//         console.log(error.response?.data?.message);
+//         throw error.response?.data?.message || '로그인 요청에 실패했습니다.';
+//     }
+// }
+
 async function loginWithEmailPassword(email, password) {
     try {
-        const requestBody = {
-            email: email,    // 사용자 이메일
-            password: password // 사용자 비밀번호
-        };
+        const requestBody = {email, password};
         const response = await axios.post(
-            `${baseURL}/api/auth/login`,
+            'http://orbit-app.net:8090/api/auth/login',
             requestBody,
             {
                 headers: {
@@ -24,16 +52,11 @@ async function loginWithEmailPassword(email, password) {
                 },
             }
         );
-
-        console.log('response : ' + response)
-
-        // 서버 응답에서 성공 여부를 확인
-        if (!response.data.success) {
-            throw new Error(response.data.message || '로그인 실패');
-        }
-
+        console.log(response.data);
         return response.data;
     } catch (error) {
+        console.error('Error occurred:', error.message);
+        console.error('Error details:', error.response?.data);
         throw error.response?.data?.message || '로그인 요청에 실패했습니다.';
     }
 }
@@ -48,7 +71,7 @@ async function loginWithGoogle(googleToken) {
     try {
         const response = await axios.post(
             `${baseURL}/api/auth/googlelogin`,
-            { token: googleToken },
+            {token: googleToken},
             {
                 headers: {
                     'Content-Type': 'application/json',

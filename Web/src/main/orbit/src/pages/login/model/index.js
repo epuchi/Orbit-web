@@ -26,8 +26,16 @@ export function useAuthModel() {
     const loginWithEmailPassword = async (email, password) => {
         try {
             const userData = await authApi.loginWithEmailPassword(email, password);
-            console.log('Login Successful (Email/Password):', userData);
-            alert('로그인 성공!');
+            console.log('userData : ' + userData);
+            console.log('userData.successCode : ' + userData.successCode);
+            if (userData.successCode === 200) {
+                console.log('Login Successful (Email/Password):', userData.message);
+                alert('로그인 성공!');
+                return 1
+            } else {
+                console.log('Login Failed (Email/Password):', userData.message);
+                alert(userData.data.message || '이메일/비밀번호 로그인에 실패했습니다.');
+            }
         } catch (error) {
             console.error('Login Failed (Email/Password):', error.response?.data?.message || error.message);
             alert(error.response?.data?.message || '이메일/비밀번호 로그인에 실패했습니다.');
