@@ -40,6 +40,21 @@ const baseURL = REACT_APP_API_BASE_URL;
 //     }
 // }
 
+/**
+ * Orbit 로그인
+ * @param {string} email 사용자 이메일
+ * @param {string} password 사용자 비밀번호
+ * @returns {Object} 서버 응답 데이터 {
+ *      successCode: 200,
+ *      message: 로그인 성공
+ *      data: {
+ *          mamberId: int
+ *          loginId: string
+ *          grantType: string
+ *          
+ *      }
+ * }
+ */
 async function loginWithEmailPassword(email, password) {
     try {
         const requestBody = {email, password};
@@ -58,6 +73,27 @@ async function loginWithEmailPassword(email, password) {
         console.error('Error occurred:', error.message);
         console.error('Error details:', error.response?.data);
         throw error.response?.data?.message || '로그인 요청에 실패했습니다.';
+    }
+}
+
+async function loginOrbit(email, password) {
+    try {
+        const requestBody = {
+            email,
+            password
+        };
+        const response = await axios.post(
+            `${baseURL}/api/auth/login`, requestBody,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }
+        );
+        console.log('Orbit 로그인 성공');
+        return response.data;
+    } catch (error) {
+        console.error('Orbit 로그인 중 에러가 발생하였습니다. error message : ', error.message);
     }
 }
 

@@ -27,6 +27,13 @@ const LoginPage = () => {
         e.preventDefault();
         const { email, password } = formData;
 
+        /* 개발용 테스트 계정 */
+        if(email=='jite1214@gmail.com'){
+            const userData = email
+            dispatch(login(userData));
+            navigate('/planner');
+        }
+
         if (!email || !password) {
             alert('이메일과 비밀번호를 입력해주세요.');
             return;

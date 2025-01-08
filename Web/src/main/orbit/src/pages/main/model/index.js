@@ -37,7 +37,7 @@ export function useMainModel() {
             color: "#c8e6c9", // 연한 초록색
         },
     ];
-    const toDoList = [
+    const toDoList1 = [
         {
             title: "학교 과제 제출",
             content: "프로그래밍 과제 제출 마감일은 이번 금요일입니다.",
@@ -97,6 +97,16 @@ export function useMainModel() {
             onCheck: 1,
         },
     ];
+    const toDoList = [
+        {
+            mainTask: '과제하기',
+            subTaskList: ['C과제', 'JAVA과제'],
+            details: '대학 과제',
+            tag: ['과제', '대학'],
+            date: '2025-01-07',
+            onChecked: [1, 0]
+        },
+    ]
 
     const alarm = [
         {
