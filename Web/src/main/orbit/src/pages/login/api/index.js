@@ -100,14 +100,11 @@ async function loginOrbit(email, password) {
 
 /**
  * 구글 로그인
- * @param {string} googleToken 구글에서 받은 credential
- * @returns {Object} 서버 응답 데이터
  */
 async function loginWithGoogle(googleToken) {
     try {
         const response = await axios.post(
-            `${baseURL}/api/auth/googlelogin`,
-            {token: googleToken},
+            `${baseURL}/api/auth/googlelogin?token=${googleToken}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -115,14 +112,10 @@ async function loginWithGoogle(googleToken) {
             }
         );
 
-        // 서버 응답에서 성공 여부 확인
-        if (!response.data.success) {
-            throw new Error(response.data.message || '구글 로그인 실패');
-        }
-
+        console.log('Orbit 로그인 성공');
         return response.data;
     } catch (error) {
-        throw error.response?.data?.message || '구글 로그인 요청에 실패했습니다.';
+        console.error('구글 로그인 중 에러가 발생하였습니다. error message : ', error.message);
     }
 }
 
