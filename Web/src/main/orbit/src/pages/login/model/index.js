@@ -48,7 +48,7 @@ export function useAuthModel() {
             const userData = await authApi.loginWithGoogle(googleToken);
             console.log('Login Successful (Google):', userData.data);
             alert('구글 로그인 성공!');
-            return userData
+            return userData.data
         } catch (error) {
             console.error('Login Failed (Google):', error.response?.data?.message || error.message);
             alert(error.response?.data?.message || '구글 로그인에 실패했습니다.');
