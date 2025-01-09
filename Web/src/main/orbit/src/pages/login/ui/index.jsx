@@ -51,7 +51,7 @@ const LoginPage = () => {
         try {
             console.log('Google Credential Response:', credentialResponse);
             const userData = await loginWithGoogle(credentialResponse.credential);
-            if (!userData.token) {
+            if (!userData.authToken) {
                 throw new Error('구글 로그인 실패: 유효한 토큰 없음');
             }
             dispatch(login(userData));
