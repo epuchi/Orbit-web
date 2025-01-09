@@ -54,7 +54,7 @@ const LoginPage = () => {
             if (!userData.authToken) {
                 throw new Error('구글 로그인 실패: 유효한 토큰 없음');
             }
-            dispatch(login(userData));
+            //dispatch(login(userData)); resux 저장 해야겠지?
             alert('구글 로그인 성공!');
             navigate('/planner');
         } catch (error) {

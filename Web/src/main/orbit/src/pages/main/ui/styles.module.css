@@ -27,6 +27,7 @@
     display: flex;
     flex: 1;
     flex-direction: row;
+    box-sizing: border-box;
 }
 
 /* 메인 섹션 */

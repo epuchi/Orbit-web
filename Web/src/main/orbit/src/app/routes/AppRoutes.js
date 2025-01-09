@@ -23,65 +23,67 @@ const AppRoutes = () => {
     const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
     return (
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-            {/* 상단 네비게이션 바 */}
-            {!shouldHideNavbar && <NavBar />}
-            <div className={styles.layoutContainer}>
-                {/* 왼쪽 사이드바 */}
-                {!shouldHideNavbar && <SideBar />}
-                <div className={styles.contentContainer}>
-                    <Routes>
-                        {/* 초기 경로 */}
-                        <Route path="/" element={<Navigate to="/login" />} />
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route path="/signup" element={<SignupPage />} />
-                        <Route path="/signupP2" element={<SignupDetailsPage />} />
+        <div style={{display:'flex', flex:1, flexDirection:'column'}}>
+            <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+                {/* 상단 네비게이션 바 */}
+                {!shouldHideNavbar && <NavBar />}
+                <div className={styles.layoutContainer}>
+                    {/* 왼쪽 사이드바 */}
+                    {!shouldHideNavbar && <SideBar />}
+                    <div className={styles.contentContainer}>
+                        <Routes>
+                            {/* 초기 경로 */}
+                            <Route path="/" element={<Navigate to="/login" />} />
+                            <Route path="/login" element={<LoginPage />} />
+                            <Route path="/signup" element={<SignupPage />} />
+                            <Route path="/signupP2" element={<SignupDetailsPage />} />
 
-                        {/* 인증된 사용자만 접근 */}
-                        <Route
-                            path="/main"
-                            element={
-                                <ProtectedRoute>
-                                    <MainPage />
-                                </ProtectedRoute>
-                            }
-                        />
-                        <Route
-                            path="/planner"
-                            element={
-                                <ProtectedRoute>
-                                    <PlannerPage />
-                                </ProtectedRoute>
-                            }
-                        />
-                        <Route
-                            path="/todolist"
-                            element={
-                                <ProtectedRoute>
-                                    <TodoListPage />
-                                </ProtectedRoute>
-                            }
-                        />
-                        <Route
-                            path="/board"
-                            element={
-                                <ProtectedRoute>
-                                    <BoardPage />
-                                </ProtectedRoute>
-                            }
-                        />
-                        <Route
-                            path="/alarm"
-                            element={
-                                <ProtectedRoute>
-                                    <AlarmPage />
-                                </ProtectedRoute>
-                            }
-                        />
-                    </Routes>
+                            {/* 인증된 사용자만 접근 */}
+                            <Route
+                                path="/main"
+                                element={
+                                    <ProtectedRoute>
+                                        <MainPage />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path="/planner"
+                                element={
+                                    <ProtectedRoute>
+                                        <PlannerPage />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path="/todolist"
+                                element={
+                                    <ProtectedRoute>
+                                        <TodoListPage />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path="/board"
+                                element={
+                                    <ProtectedRoute>
+                                        <BoardPage />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path="/alarm"
+                                element={
+                                    <ProtectedRoute>
+                                        <AlarmPage />
+                                    </ProtectedRoute>
+                                }
+                            />
+                        </Routes>
+                    </div>
                 </div>
-            </div>
-        </GoogleOAuthProvider>
+            </GoogleOAuthProvider>
+        </div>
     );
 };
 
