@@ -4,79 +4,12 @@ import REACT_APP_API_BASE_URL, { KAKAO_JAVASCRIPT_KEY } from '@/shared/assets/ur
 const baseURL = REACT_APP_API_BASE_URL;
 
 /**
- * 이메일/비밀번호 로그인
- * @param {string} email 사용자 이메일
- * @param {string} password 사용자 비밀번호
- * @returns {Object} 서버 응답 데이터 (예: { token, user } 등)
- */
-// async function loginWithEmailPassword(email, password) {
-//     try {
-//         const requestBody = {
-//             email: email,    // 사용자 이메일
-//             password: password // 사용자 비밀번호
-//         };
-//         console.log(requestBody);
-//         console.log(`${baseURL}`)
-//         const response = await axios.post(
-//             `${baseURL}/api/auth/login`,
-//             requestBody,
-//             {
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 },
-//             }
-//         );
-//         console.log(response);
-//
-//         console.log('response : ' + response.data)
-//         return response.data;
-//
-//     } catch (error) {
-//         console.log('에러 메세지');
-//         console.log(error);
-//         console.log(error.response);
-//         console.log(error.response?.data?.message);
-//         throw error.response?.data?.message || '로그인 요청에 실패했습니다.';
-//     }
-// }
-
-/**
  * Orbit 로그인
  * @param {string} email 사용자 이메일
  * @param {string} password 사용자 비밀번호
- * @returns {Object} 서버 응답 데이터 {
- *      successCode: 200,
- *      message: 로그인 성공
- *      data: {
- *          mamberId: int
- *          loginId: string
- *          grantType: string
- *          
- *      }
- * }
+ * @returns {Object} 유저 정보 데이터 반환
  */
-async function loginWithEmailPassword(email, password) {
-    try {
-        const requestBody = { email, password };
-        const response = await axios.post(
-            'http://orbit-app.net:8090/api/auth/login',
-            requestBody,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
-        console.log(response.data);
-        return response.data;
-    } catch (error) {
-        console.error('Error occurred:', error.message);
-        console.error('Error details:', error.response?.data);
-        throw error.response?.data?.message || '로그인 요청에 실패했습니다.';
-    }
-}
-
-async function loginOrbit(email, password) {
+async function loginOrbitAPI(email, password) {
     try {
         const requestBody = {
             email,
@@ -93,22 +26,26 @@ async function loginOrbit(email, password) {
         if (response.sucessCode === 200) {
             console.log('code : ' , response.sucessCode)
             console.log(response.sucessResult);
-        }
-        if (response.failCode === 401) {
+            return response.data
+        }else if (response.failCode === 401) {
             console.log('code : ' , response.failCode)
             console.log(response.failResult);
+            return response.data
+        } else {
+            throw new Error()
         }
-        return response.data
     } catch (error) {
         console.error('Orbit 로그인 중 에러가 발생하였습니다.');
         console.error('에러 메시지 : ', error.message);
-        return
+        return error
     }
 }
 
 
 /**
- * 구글 로그인
+ * Google 로그인
+ * @param {string} googleToken 사용자 이메일
+ * @returns {Object} 유저 정보 데이터 반환
  */
 async function loginWithGoogle(googleToken) {
     try {
@@ -120,11 +57,18 @@ async function loginWithGoogle(googleToken) {
                 },
             }
         );
-
-        console.log('Orbit 로그인 성공');
+        if (response.sucessCode === 200) {
+            console.log('code : ' , response.sucessCode)
+            console.log(response.sucessResult);
+        }
+        if (response.failCode === 401) {
+            console.log('code : ' , response.failCode)
+            console.log(response.failResult);
+        }
         return response.data;
     } catch (error) {
-        console.error('구글 로그인 중 에러가 발생하였습니다. error message : ', error.message);
+        console.error('Google 로그인 중 에러가 발생하였습니다.');
+        console.error('에러 메시지 : ', error.message);
     }
 }
 
@@ -164,9 +108,9 @@ function loginWithKakao() {
 
 // export 한 객체를 다른 파일에서 import해서 사용
 const authApi = {
-    loginWithEmailPassword,
+    loginOrbitAPI,
     loginWithGoogle,
-    loginWithKakao,
+    loginWithKakao
 };
 
 export default authApi;

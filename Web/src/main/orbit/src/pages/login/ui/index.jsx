@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from '@/app/redux/authSlice';
 
 const LoginPage = () => {
-    const { loginWithEmailPassword, loginWithGoogle, loginWithKakao } = useAuthModel();
+    const { loginOrbit, loginGoogle, loginWithKakao } = useAuthModel();
     const [formData, setFormData] = useState({ email: '', password: '' });
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const LoginPage = () => {
         const { email, password } = formData;
 
         /* 개발용 테스트 계정 */
-        if(email=='jite1214@gmail.com'){
+        if (email == 'jite1214@gmail.com') {
             const userData = email
             dispatch(login(userData));
             navigate('/planner');
@@ -40,38 +40,36 @@ const LoginPage = () => {
         }
 
         try {
-            const userData = await loginWithEmailPassword(email, password);
-            if (userData === 1) {
-                dispatch(login(userData));
-                alert('로그인 성공!');
+            const loginCode = await loginOrbit(email, password);
+            if (loginCode === 200) {
                 navigate('/planner');
-            } else {
-                console.log('userData' + userData);
+            } else if (loginCode === 401) {
+                alert('이메일 또는 비밀번호를 확인해주세요.');
+            } else if (loginCode === 404) {
+                alert('오류가 발생했습니다.');
             }
         } catch (error) {
             console.error('Login Failed:', error);
-            alert(error.message || '로그인에 실패했습니다.');
         }
     };
 
     const handleGoogleLoginSuccess = async (credentialResponse) => {
         try {
-            console.log('Google Credential Response:', credentialResponse);
-            const userData = await loginWithGoogle(credentialResponse.credential);
-            if (!userData.authToken) {
-                throw new Error('구글 로그인 실패: 유효한 토큰 없음');
+            const loginCode = await loginGoogle(credentialResponse.credential);
+            if (loginCode === 200) {
+                navigate('/planner');
+            } else if (loginCode === 401) {
+                alert('이메일 또는 비밀번호를 확인해주세요.');
+            } else if (loginCode === 404) {
+                alert('오류가 발생했습니다.');
             }
-            dispatch(login(userData));
-            alert('구글 로그인 성공!');
-            navigate('/planner');
         } catch (error) {
-            console.error('Google Login Failed:', error);
-            alert(error.message || '구글 로그인 실패');
+            // console.error('Google Login Failed:', error);
         }
     };
 
     const handleGoogleLoginFailure = (error) => {
-        console.error('Google Login Failed:', error);
+        // console.error('Google Login Failed:', error);
         alert('구글 로그인에 실패했습니다.');
     };
 
