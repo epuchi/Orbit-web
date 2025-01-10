@@ -1,5 +1,5 @@
 import axios from 'axios';
-import REACT_APP_API_BASE_URL, {KAKAO_JAVASCRIPT_KEY} from '@/shared/assets/uri'; // KAKAO_JAVASCRIPT_KEY 가져오기
+import REACT_APP_API_BASE_URL, { KAKAO_JAVASCRIPT_KEY } from '@/shared/assets/uri'; // KAKAO_JAVASCRIPT_KEY 가져오기
 
 const baseURL = REACT_APP_API_BASE_URL;
 
@@ -57,7 +57,7 @@ const baseURL = REACT_APP_API_BASE_URL;
  */
 async function loginWithEmailPassword(email, password) {
     try {
-        const requestBody = {email, password};
+        const requestBody = { email, password };
         const response = await axios.post(
             'http://orbit-app.net:8090/api/auth/login',
             requestBody,
@@ -90,10 +90,19 @@ async function loginOrbit(email, password) {
                 },
             }
         );
-        console.log('Orbit 로그인 성공');
-        return response.data;
+        if (response.sucessCode === 200) {
+            console.log('code : ' , response.sucessCode)
+            console.log(response.sucessResult);
+        }
+        if (response.failCode === 401) {
+            console.log('code : ' , response.failCode)
+            console.log(response.failResult);
+        }
+        return response.data
     } catch (error) {
-        console.error('Orbit 로그인 중 에러가 발생하였습니다. error message : ', error.message);
+        console.error('Orbit 로그인 중 에러가 발생하였습니다.');
+        console.error('에러 메시지 : ', error.message);
+        return
     }
 }
 

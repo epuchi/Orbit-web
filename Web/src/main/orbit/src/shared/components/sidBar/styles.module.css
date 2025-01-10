@@ -1,11 +1,10 @@
 /* 사이드바 컨테이너 */
 .container {
     background-color: lightgray;
-    width: 230px;
+    width: 250px;
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 0px 10px 0px 10px;
 }
 
 /* 프로젝트 스타일 */
