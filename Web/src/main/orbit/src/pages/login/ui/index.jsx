@@ -4,7 +4,6 @@ import { GoogleLogin } from '@react-oauth/google';
 import { useAuthModel } from '../model/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '@/app/redux/authSlice';
-import authApi from "@/pages/login/api";
 
 const LoginPage = () => {
     const { loginWithEmailPassword, loginWithGoogle, loginWithKakao } = useAuthModel();
@@ -50,17 +49,11 @@ const LoginPage = () => {
 
     const handleGoogleLoginSuccess = async (credentialResponse) => {
         try {
-            if (!credentialResponse || !credentialResponse.credential) {
-                throw new Error('구글 로그인 실패: credentialResponse가 유효하지 않음');
-            }
-            console.log('credentialResponse : ' + credentialResponse);
-            console.log('credentialResponse.credential : ' + credentialResponse.credential);
+            console.log('Google Credential Response:', credentialResponse);
             const userData = await loginWithGoogle(credentialResponse.credential);
-            console.log('userData : ' + userData)
             if (!userData.authToken) {
                 throw new Error('구글 로그인 실패: 유효한 토큰 없음');
             }
-
             dispatch(login(userData));
             alert('구글 로그인 성공!');
             navigate('/planner');
