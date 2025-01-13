@@ -57,33 +57,43 @@ const TodoList = () => {
                 )}
             </div> */}
 
-            <div className={styles.toDoItems}>
-                {toDoList.length > 0 ? (
-                    toDoList.map((item, index) => (
-                        <div key={index} className={styles.toDoItem}>
-                            <p>{item.mainTask}</p>
-                            <p>{item.subTaskList}</p>
-                            <p>{item.details}</p>
-                            <p>{item.date}</p>
-                            {item.onChecked.length > 0 ? (
-                                item.map((checkItem, index)=>(
-                                    <>
-                            <input key={index}type="checkbox" />
-                                    </>
-                                ))
-                            ) : (
-                                <p>none</p>
-                            )}
-                            <p>{item.onChecked}</p>
+<div className={styles.toDo}>
+    {toDoList.length > 0 ? (
+        toDoList.map((item, index) => (
+            <div key={item.id || index} className={`${styles.toDoList} border-box`}>
+                <div className={`${styles.mainTask} border-box`}>
+                    <p className={styles.mainTaskTitle}>{item.mainTask}</p>
+                    <p>{item.details} {item.date}</p>
+                    {item.tag.length > 0 &&
+                        item.tag.map((tag, tagIndex) => (
+                            <p key={tagIndex}>{tag}</p>
+                        ))}
+                </div>
+                {item.subTaskList.length > 0 &&
+                    item.subTaskList.map((task, taskIndex) => (
+                        <div key={taskIndex} className={styles.subTask}>
+                            <input
+                                className={styles.subTaskCheck}
+                                type="checkbox"
+                                id={`subTask-${index}-${taskIndex}`}
+                            />
+                            <label
+                                className={styles.subTaskText}
+                                htmlFor={`subTask-${index}-${taskIndex}`}
+                            >
+                                {task}
+                            </label>
                         </div>
-                    ))
-                ) : (
-                    <span className={styles.noTodoMessage}>
-                        오늘의 할 일이 없습니다!
-                        할 일들을 추가 해보세요!
-                    </span>
-                )}
+                    ))}
             </div>
+        ))
+    ) : (
+        <span className={styles.noTodoMessage}>
+            오늘의 할 일이 없습니다! 할 일들을 추가 해보세요!
+        </span>
+    )}
+</div>
+
         </div>
     );
 };

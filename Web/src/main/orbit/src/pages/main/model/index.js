@@ -106,6 +106,22 @@ export function useMainModel() {
             date: '2025-01-07',
             onChecked: [1, 0]
         },
+        {
+            mainTask: 'test',
+            subTaskList: ['test'],
+            details: '대학 과제',
+            tag: ['과제'],
+            date: '2025-01-07',
+            onChecked: [0]
+        },
+        {
+            mainTask: 'test',
+            subTaskList: [],
+            details: '대학 과제',
+            tag: ['과제'],
+            date: '2025-01-07',
+            onChecked: []
+        },
     ]
 
     const alarm = [
