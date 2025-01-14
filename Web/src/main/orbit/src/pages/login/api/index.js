@@ -95,7 +95,7 @@ function loginWithKakao() {
 
         // 리다이렉션을 통해 카카오 로그인 처리
         window.Kakao.Auth.authorize({
-            redirectUri: `${baseURL}/api/auth/login`,
+            redirectUri: `${baseURL}/api/auth/kakaologin`,
         });
 
         console.log('Redirecting to Kakao login...');
