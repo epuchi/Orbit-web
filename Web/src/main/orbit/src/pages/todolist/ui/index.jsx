@@ -99,7 +99,7 @@ const useTodoState = () => {
   };
 };
 
-// TodoForm Component
+// 투두 폼 컴포넌트트
 const TodoForm = ({ onSubmit, selectedDate }) => {
   const [mainTask, setMainTask] = useState('');
   const [isMainTaskFixed, setIsMainTaskFixed] = useState(false);
@@ -107,7 +107,7 @@ const TodoForm = ({ onSubmit, selectedDate }) => {
   const [descriptionFixed, setDescriptionFixed] = useState(false);
   const [tags, setTags] = useState([{ id: 1, value: '', isFixed: false }]);
   const [inputFields, setInputFields] = useState({
-    description: '',
+    details: '',
   });
 
   const handleMainTaskChange = (e) => {
@@ -160,7 +160,7 @@ const TodoForm = ({ onSubmit, selectedDate }) => {
   };
 
   const handleFixDescription = () => {
-    if (!inputFields.description.trim()) {
+    if (!inputFields.details.trim()) {
       alert('설명을 입력하세요!');
       return;
     }
@@ -175,10 +175,10 @@ const TodoForm = ({ onSubmit, selectedDate }) => {
 
     const todoData = {
       mainTask,
-      additionalTasks: additionalInputs
+      subTaskList: additionalInputs
         .filter(input => input.isFixed)
         .map(input => input.value),
-      description: inputFields.description,
+      details: inputFields.details,
       tags: tags
         .filter(tag => tag.isFixed)
         .map(tag => tag.value),
@@ -191,7 +191,7 @@ const TodoForm = ({ onSubmit, selectedDate }) => {
       setMainTask('');
       setIsMainTaskFixed(false);
       setAdditionalInputs([]);
-      setInputFields({ description: '' });
+      setInputFields({ details: '' });
       setTags([{ id: 1, value: '', isFixed: false }]);
       setDescriptionFixed(false);
     } catch (error) {
@@ -275,15 +275,15 @@ const TodoForm = ({ onSubmit, selectedDate }) => {
  
       <div className={styles.inputContainer}>
         {descriptionFixed ? (
-          <div className={styles.fixedTask}>{inputFields.description}</div>
+          <div className={styles.fixedTask}>{inputFields.details}</div>
         ) : (
           <div className={styles.inputWrapper}>
             <input
               type="text"
-              value={inputFields.description}
+              value={inputFields.details}
               onChange={(e) => setInputFields(prev => ({
                 ...prev,
-                description: e.target.value
+                details: e.target.value
               }))}
               className={styles.inputField}
               placeholder="일정의 설명을 적어주세요!"
@@ -346,9 +346,11 @@ const TodoForm = ({ onSubmit, selectedDate }) => {
 
 // TodoList Component
 const TodoList = ({ todos, onDelete }) => {
+
+  const todoList = todos || [];
   return (
     <div className={styles.todosContainer}>
-      {todos.map((todo, index) => (
+      {todoList.map((todo, index) => (
         <div key={index} className={styles.todoItem}>
           <div className={styles.todoHeader}>
             <h3>{todo.mainTask}</h3>
@@ -359,17 +361,17 @@ const TodoList = ({ todos, onDelete }) => {
               🗑️
             </button>
           </div>
-          {todo.additionalTasks.length > 0 && (
+          {todo.subTaskList?.length > 0 && (
             <ul className={styles.additionalTasks}>
-              {todo.additionalTasks.map((task, i) => (
+              {todo.subTaskList.map((task, i) => (
                 <li key={i}>{task}</li>
               ))}
             </ul>
           )}
-          {todo.description && (
-            <p className={styles.todoDescription}>{todo.description}</p>
+          {todo.details && (
+            <p className={styles.todoDescription}>{todo.details}</p>
           )}
-          {todo.tags.length > 0 && (
+          {todo.tags?.length > 0 && (
             <div className={styles.todoTags}>
               {todo.tags.map((tag, i) => (
                 <span key={i} className={styles.todoTag}>#{tag}</span>

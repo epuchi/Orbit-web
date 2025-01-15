@@ -2,8 +2,8 @@ export class TodoModel {
     constructor(data = {}) {
       this.id = data.id;
       this.mainTask = data.mainTask || '';
-      this.additionalTasks = data.additionalTasks || [];
-      this.description = data.description || '';
+      this.subTaskList = data.subTaskList || [];
+      this.details = data.details || '';
       this.tags = data.tags || [];
       this.date = data.date || '';
       this.createdAt = data.createdAt || new Date().toISOString();
@@ -42,8 +42,8 @@ export class TodoModel {
       }
   
       // 추가 작업 유효성 검사
-      if (this.additionalTasks.some(task => !task?.trim())) {
-        errors.additionalTasks = '빈 추가 작업이 있습니다.';
+      if (this.subTaskList.some(task => !task?.trim())) {
+        errors.subTaskList = '빈 추가 작업이 있습니다.';
       }
   
       // 태그 유효성 검사
@@ -61,8 +61,8 @@ export class TodoModel {
     toApiFormat() {
       return {
         mainTask: this.mainTask,
-        additionalTasks: this.additionalTasks.filter(task => task?.trim()),
-        description: this.description,
+        subTaskList: this.subTaskList.filter(task => task?.trim()),
+        details: this.details,
         tags: this.tags.filter(tag => tag?.trim()),
         date: this.date
       };
@@ -83,9 +83,9 @@ export class TodoModel {
       
       return todos.filter(todo => 
         todo.mainTask.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        todo.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        todo.details.toLowerCase().includes(searchTerm.toLowerCase()) ||
         todo.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        todo.additionalTasks.some(task => 
+        todo.subTaskList.some(task => 
           task.toLowerCase().includes(searchTerm.toLowerCase())
         )
       );
