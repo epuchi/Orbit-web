@@ -1,5 +1,5 @@
 import axios from 'axios';
-import REACT_APP_API_BASE_URL, { KAKAO_JAVASCRIPT_KEY } from '@/shared/assets/uri'; // KAKAO_JAVASCRIPT_KEY 가져오기
+import REACT_APP_API_BASE_URL, { KAKAO_JAVASCRIPT_KEY, KAKAO_REST_API_KEY } from '@/shared/assets/uri'; // KAKAO_JAVASCRIPT_KEY 가져오기
 
 const baseURL = REACT_APP_API_BASE_URL;
 
@@ -78,9 +78,13 @@ async function loginWithGoogle(googleToken) {
  * (실제 인증 처리는 백엔드의 /api/auth/login 에서 인가코드 받아 진행)
  */
 function loginWithKakao() {
+    const REDIRECT_URI = `${baseURL}/api/auth/kakaologin`
+    const REST_API_KEY = KAKAO_REST_API_KEY
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     try {
         const kakaoKey = KAKAO_JAVASCRIPT_KEY;
 
+        /*
         if (!kakaoKey) {
             throw new Error('카카오 앱 키가 설정되지 않았습니다.');
         }
@@ -88,14 +92,15 @@ function loginWithKakao() {
         if (!window.Kakao) {
             throw new Error('카카오 SDK가 로드되지 않았습니다.');
         }
+            
 
         if (!window.Kakao.isInitialized()) {
             window.Kakao.init(kakaoKey);
         }
-
+        */
         // 리다이렉션을 통해 카카오 로그인 처리
         window.Kakao.Auth.authorize({
-            redirectUri: `${baseURL}/api/auth/kakaologin`,
+            redirectUri: KAKAO_AUTH_URL,
         });
 
         console.log('Redirecting to Kakao login...');
