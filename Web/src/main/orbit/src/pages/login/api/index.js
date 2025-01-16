@@ -82,25 +82,19 @@ function loginWithKakao() {
     const REST_API_KEY = KAKAO_REST_API_KEY
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     try {
-        const kakaoKey = KAKAO_JAVASCRIPT_KEY;
-
-        /*
-        if (!kakaoKey) {
-            throw new Error('카카오 앱 키가 설정되지 않았습니다.');
-        }
 
         if (!window.Kakao) {
             throw new Error('카카오 SDK가 로드되지 않았습니다.');
         }
-            
+
 
         if (!window.Kakao.isInitialized()) {
-            window.Kakao.init(kakaoKey);
+            window.Kakao.init(REST_API_KEY);
         }
-        */
+
         // 리다이렉션을 통해 카카오 로그인 처리
         window.Kakao.Auth.authorize({
-            redirectUri: KAKAO_AUTH_URL,
+            redirectUri: REDIRECT_URI,
         });
 
         console.log('Redirecting to Kakao login...');
