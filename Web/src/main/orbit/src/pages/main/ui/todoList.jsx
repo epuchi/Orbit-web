@@ -61,6 +61,7 @@ const TodoList = () => {
     {toDoList.length > 0 ? (
         toDoList.map((item, index) => (
             <div key={item.id || index} className={`${styles.toDoList} border-box`}>
+                <input type="checkbox" name="" id="" />
                 <div className={`${styles.mainTask} border-box`}>
                     <p className={styles.mainTaskTitle}>{item.mainTask}</p>
                     <p>{item.details} {item.date}</p>

@@ -84,11 +84,13 @@ function loginWithKakao() {
     try {
 
         if (!window.Kakao) {
+            console.log(window.kakao)
             throw new Error('카카오 SDK가 로드되지 않았습니다.');
         }
 
 
         if (!window.Kakao.isInitialized()) {
+            console.log(window.Kakao.isInitialized())
             window.Kakao.init(REST_API_KEY);
         }
 
