@@ -1,5 +1,7 @@
 import authApi from '../api/index';
 import { initializeApp } from 'firebase/app';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '@/app/redux/authSlice';
 
 /**
  * Firebase 설정 (app 변수를 사용하지 않으면 할당 생략)
@@ -22,6 +24,7 @@ initializeApp(firebaseConfig);
  *   import 시 초기화 순서 문제 없이 참조 가능
  */
 export function useAuthModel() {
+    const dispatch = useDispatch();
     // 이메일/비밀번호 로그인
     const loginOrbit = async (email, password) => {
         // dispatch(login(userData));
@@ -45,6 +48,7 @@ export function useAuthModel() {
         try {
             const userData = await authApi.loginWithGoogle(googleToken);
             if (userData != null) {
+                dispatch(login(userData))
                 return 200;
             } else {
                 return 401;

@@ -29,8 +29,8 @@ const LoginPage = () => {
 
         /* 개발용 테스트 계정 */
         if (email == 'jite1214@gmail.com') {
-            const userData = email
-            dispatch(login(userData));
+            // const userData = email
+            // dispatch(login(userData));
             navigate('/planner');
         }
 
@@ -57,14 +57,14 @@ const LoginPage = () => {
         try {
             const loginCode = await loginGoogle(credentialResponse.credential);
             if (loginCode === 200) {
-                navigate('/planner');
+                navigate('/main');
             } else if (loginCode === 401) {
                 alert('이메일 또는 비밀번호를 확인해주세요.');
             } else if (loginCode === 404) {
                 alert('오류가 발생했습니다.');
             }
         } catch (error) {
-            // console.error('Google Login Failed:', error);
+            console.error('Google Login Failed:', error);
         }
     };
 
