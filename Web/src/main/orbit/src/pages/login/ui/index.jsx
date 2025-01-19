@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuthModel } from '../model/index';
 import { useDispatch, useSelector } from 'react-redux';
+import KakaoLogin from "react-kakao-login";
+import { KAKAO_JAVASCRIPT_KEY } from '@/shared/assets/uri';
 import { login } from '@/app/redux/authSlice';
 
 const LoginPage = () => {
@@ -75,13 +77,40 @@ const LoginPage = () => {
 
     const handleKakaoLogin = async () => {
         try {
-            await loginWithKakao();
-            alert('카카오 로그인 성공!');
-            navigate('/planner');
+            const loginCode = await loginWithKakao();
+            console.log(loginCode);
+            if (loginCode === 200) {
+                navigate('/main');
+            } else if (loginCode === 401) {
+                alert('이메일 또는 비밀번호를 확인해주세요.');
+            } else if (loginCode === 404) {
+                alert('오류가 발생했습니다.');
+            }
         } catch (error) {
             console.error('Kakao Login Failed:', error);
             alert(error.message || '카카오 로그인에 실패했습니다.');
         }
+    };
+
+    const kakaoOnSuccess = async (data)=>{
+        console.log(data)
+        // const idToken = data.response.access_token  // 엑세스 토큰 백엔드로 전달
+
+        try {
+            const loginCode = await loginWithKakao(data.response.access_token);
+            if (loginCode === 200) {
+                navigate('/main');
+            } else if (loginCode === 401) {
+                alert('이메일 또는 비밀번호를 확인해주세요.');
+            } else if (loginCode === 404) {
+                alert('오류가 발생했습니다.');
+            }
+        } catch (error) {
+            console.error('Google Login Failed:', error);
+        }
+    }
+    const kakaoOnFailure = (error) => {
+        console.log(error);
     };
 
     const goToSignup = () => navigate('/signup');
@@ -149,6 +178,11 @@ const LoginPage = () => {
             >
                 Login with Kakao
             </button>
+            <KakaoLogin
+                token={KAKAO_JAVASCRIPT_KEY}
+                onSuccess={kakaoOnSuccess}
+                onFail={kakaoOnFailure}
+            />
             <div style={{ marginTop: '20px' }}>
                 <p>계정이 없으신가요?</p>
                 <button

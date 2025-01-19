@@ -61,13 +61,20 @@ export function useAuthModel() {
     }
 
     // 카카오 로그인
-    const loginWithKakao = () => {
+    const loginWithKakao = async (token) => {
         try {
-            authApi.loginWithKakao();
-            console.log('Redirecting to Kakao login...');
+            const userData = await authApi.loginWithKakao(token);
+            if (userData != null) {
+                console.log(userData);
+                dispatch(login(userData))
+                return 200;
+            } else {
+                return 401;
+            }
         } catch (error) {
-            console.error('Kakao Login Failed:', error.message);
-            alert('카카오 로그인에 실패했습니다. 다시 시도해주세요.');
+            console.error('로그인 데이터 처리 중 알 수 없는 에러가 발생했습니다.');
+            console.error(error)
+            return 404;
         }
     };
 

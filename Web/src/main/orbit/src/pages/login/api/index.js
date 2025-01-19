@@ -49,6 +49,7 @@ async function loginOrbitAPI(email, password) {
  */
 async function loginWithGoogle(googleToken) {
     try {
+        console.log(googleToken);
         const response = await axios.post(
             `${baseURL}/api/auth/googlelogin?token=${googleToken}`,
             {
@@ -57,6 +58,7 @@ async function loginWithGoogle(googleToken) {
                 },
             }
         );
+
         if (response.sucessCode === 200) {
             console.log('code : ' , response.sucessCode)
             console.log(response.sucessResult);
@@ -77,32 +79,67 @@ async function loginWithGoogle(googleToken) {
  * 카카오 로그인 - 카카오 SDK를 사용해 리다이렉트
  * (실제 인증 처리는 백엔드의 /api/auth/login 에서 인가코드 받아 진행)
  */
-function loginWithKakao() {
-    const REDIRECT_URI = `${baseURL}/api/auth/kakaologin`
-    const REST_API_KEY = KAKAO_REST_API_KEY
-    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+// function loginWithKakao() {
+//     const REDIRECT_URI = `${baseURL}/api/auth/kakaologin`
+//     const REST_API_KEY = KAKAO_REST_API_KEY
+//     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+//     try {
+//
+//         if (!window.Kakao) {
+//             console.log(window.kakao)
+//             throw new Error('카카오 SDK가 로드되지 않았습니다.');
+//         }
+//
+//
+//         if (!window.Kakao.isInitialized()) {
+//             console.log(window.Kakao.isInitialized())
+//             window.Kakao.init(REST_API_KEY);
+//         }
+//
+//         // 리다이렉션을 통해 카카오 로그인 처리
+//         window.Kakao.Auth.authorize({
+//             redirectUri: REDIRECT_URI,
+//         });
+//
+//
+//         console.log('Redirecting to Kakao login...');
+//     } catch (error) {
+//         console.error('Kakao Login Failed:', error.message);
+//         alert(error.message || '카카오 로그인에 실패했습니다. 다시 시도해주세요.');
+//     }
+// }
+
+async function loginWithKakao(token) {
     try {
+        console.log('asdasdasdasd');
+        console.log(token);
+        const response = await axios.post(
+            `${baseURL}/api/auth/kakaologin?code=${token}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        console.log(response.data);
 
-        if (!window.Kakao) {
-            console.log(window.kakao)
-            throw new Error('카카오 SDK가 로드되지 않았습니다.');
+        if (response.data.sucessCode === 200) {
+            console.log('code : ' , response.sucessCode)
+            console.log(response.sucessResult);
         }
-
-
-        if (!window.Kakao.isInitialized()) {
-            console.log(window.Kakao.isInitialized())
-            window.Kakao.init(REST_API_KEY);
+        if (response.data.failCode === 401) {
+            console.log('code : ' , response.failCode)
+            console.log(response.failResult);
         }
-
-        // 리다이렉션을 통해 카카오 로그인 처리
-        window.Kakao.Auth.authorize({
-            redirectUri: REDIRECT_URI,
-        });
-
-        console.log('Redirecting to Kakao login...');
+        if (response.data.failCode === 500) {
+            console.log('code : ' , response.failCode)
+            console.log(response.failResult);
+        }
+        console.log(response.data)
+        return response.data;
     } catch (error) {
-        console.error('Kakao Login Failed:', error.message);
-        alert(error.message || '카카오 로그인에 실패했습니다. 다시 시도해주세요.');
+        console.error('kakao 로그인 중 에러가 발생하였습니다.');
+        console.error('에러 메시지 : ', error.message);
     }
 }
 
