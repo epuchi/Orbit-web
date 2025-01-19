@@ -1,5 +1,7 @@
 import authApi from '../api/index';
 import { initializeApp } from 'firebase/app';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '@/app/redux/authSlice';
 
 /**
  * Firebase 설정 (app 변수를 사용하지 않으면 할당 생략)
@@ -22,29 +24,41 @@ initializeApp(firebaseConfig);
  *   import 시 초기화 순서 문제 없이 참조 가능
  */
 export function useAuthModel() {
+    const dispatch = useDispatch();
     // 이메일/비밀번호 로그인
-    const loginWithEmailPassword = async (email, password) => {
+    const loginOrbit = async (email, password) => {
+        // dispatch(login(userData));
         try {
-            const userData = await authApi.loginWithEmailPassword(email, password);
-            console.log('Login Successful (Email/Password):', userData);
-            alert('로그인 성공!');
-        } catch (error) {
-            console.error('Login Failed (Email/Password):', error.response?.data?.message || error.message);
-            alert(error.response?.data?.message || '이메일/비밀번호 로그인에 실패했습니다.');
+            const userData = await authApi.loginOrbitAPI(email, password);
+            if(userData != null) {
+                return 200;
+            } else {
+                return 401;
+            }
+        } catch(error) {
+            console.error('로그인 데이터 처리 중 알 수 없는 에러가 발생했습니다.');
+            console.error(error)
+            return 404;
         }
-    };
+    }
+
 
     // 구글 로그인
-    const loginWithGoogle = async (googleToken) => {
+    const loginGoogle = async (googleToken) => {
         try {
             const userData = await authApi.loginWithGoogle(googleToken);
-            console.log('Login Successful (Google):', userData);
-            alert('구글 로그인 성공!');
+            if (userData != null) {
+                dispatch(login(userData))
+                return 200;
+            } else {
+                return 401;
+            }
         } catch (error) {
-            console.error('Login Failed (Google):', error.response?.data?.message || error.message);
-            alert(error.response?.data?.message || '구글 로그인에 실패했습니다.');
+            console.error('로그인 데이터 처리 중 알 수 없는 에러가 발생했습니다.');
+            console.error(error)
+            return 404;
         }
-    };
+    }
 
     // 카카오 로그인
     const loginWithKakao = () => {
@@ -59,8 +73,8 @@ export function useAuthModel() {
 
     // 훅이 반환할 메서드들
     return {
-        loginWithEmailPassword,
-        loginWithGoogle,
+        loginOrbit,
+        loginGoogle,
         loginWithKakao,
     };
 }

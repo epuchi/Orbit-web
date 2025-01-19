@@ -1,75 +1,53 @@
-import React, { useState, useRef } from 'react';
-import styles from './styles.module.css';
+import React, { useRef } from "react";
+import styles from "./styles.module.css";
+import { useMainModel } from "@/pages/main/model"; // 예시: 원하는 model import
+import Project from "./project";
+import Calendar from "./calendar";
+import TodoList from "./todoList";
+import Alarm from "./alarm"
 
 const MainPage = () => {
-    const userName = '류웨이';
-    const [myProject, setMyProject] = useState(['project1', 'project2','project1', 'project2','project1', 'project2']);
-    const projectViewRef = useRef(null);
 
-    const handleAddProject = () => {
+    // 모델에서 사용자 정보, 프로젝트, 투두 리스트 가져오기
+    const { userData } = useMainModel();
+    const userName = userData();
 
-    };
 
-    const scrollLeft = () => {
-        if (projectViewRef.current) {
-            projectViewRef.current.scrollBy({ left: -200, behavior: 'smooth' });
-        }
-    };
-
-    const scrollRight = () => {
-        if (projectViewRef.current) {
-            projectViewRef.current.scrollBy({ left: 200, behavior: 'smooth' });
-        }
-    };
 
     return (
         <div className={styles.container}>
-            <div className={styles.welcomeArea}>
-                <span className={styles.welcomeText}>{userName}님 안녕하세요!</span>
-            </div>
+            {/* 메인 섹션 */}
+            <div className={styles.section}>
+                {/* 상단 헤더 */}
+                <div className={styles.section_header}>
+                    <span className={styles.section_header_text}>
+                        {userName}님 안녕하세요!
+                    </span>
+                </div>
 
-            <div className={styles.projectHeader}>
-                <span className={styles.projectHeaderTitle}>내 프로젝트</span>
-            </div>
+                {/* 프로젝트 섹션 */}
+                <div className={styles.section_body}>
+                    <Project />
+                </div>
 
-            <div className={styles.projectControlArea}>
-                <button onClick={scrollLeft} className={styles.scrollButton}>{'<'}</button>
-                <div className={styles.projectViewWrapper} ref={projectViewRef}>
-                    <div className={styles.projectViewArea}>
-                        {myProject.length > 0 ? (
-                            myProject.map((project, index) => (
-                                <div key={index} className={styles.projectView}>
-                                    <span>{project}</span>
-                                </div>
-                            ))
-                        ) : (
-                            <div className={styles.noProjectContainer}>
-                                <div className={styles.noProjectMessage}>
-                                    참여중인 프로젝트가 없으시군요! <br/> 프로젝트를 생성해보세요!
-                                </div>
-                            </div>
-                        )}
+                {/* 하단 (투두 리스트 + 내 일정) */}
+                <div className={styles.section_footer}>
+                    {/* 투두 리스트 */}
+                    <div className={styles.section_toDoList}>
+                        <TodoList />
+                    </div>
+
+                    {/* 내 일정 (2주) */}
+                    <div className={styles.section_planner}>
+                        <Calendar />
                     </div>
                 </div>
-                <button onClick={scrollRight} className={styles.scrollButton}>{'>'}</button>
             </div>
 
-            <div className={styles.bottomArea}>
-                <div className={styles.toDoList}>
-                    <div className={styles.toDoHeader}>
-                        <span>Todo List</span>
-                        <button className={styles.navButton}>&gt;</button>
-                    </div>
-                    {/* Todo List 내용 추가 */}
-                </div>
-                <div className={styles.toDoList}>
-                    <div className={styles.toDoHeader}>
-                        <span>내 일정</span>
-                        <button className={styles.navButton}>&gt;</button>
-                    </div>
-                    {/* 일정 내용 추가 */}
-                </div>
-            </div>
+            {/* 알림(aside) */}
+            <aside className={styles.aside}>
+                <Alarm />
+            </aside>
         </div>
     );
 };

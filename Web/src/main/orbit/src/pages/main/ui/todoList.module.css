@@ -1,0 +1,137 @@
+:root {
+    --todo-title-color: #3498db; /* 블루 계열로 좀 더 세련되게 */
+    --todo-description-color: #2c3e50; /* 다크 그레이 */
+    --todo-border-color: #dcdde1; /* 밝은 그레이 */
+    --todo-background-color: #ecf0f1; /* 밝은 배경색 */
+    --todo-hover-shadow: rgba(0, 0, 0, 0.2); /* 호버 시 더 부드러운 그림자 */
+    --subtask-background: #f8f9fa; /* 서브태스크 배경 */
+}
+
+.todoListContainer {
+    background-color: var(--todo-background-color);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+.todoListHeader {
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--todo-border-color);
+    margin-bottom: 20px;
+}
+
+.todoListHeader > span {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--todo-title-color);
+}
+
+.navigateButton {
+    background-color: var(--todo-title-color);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navigateButton > a {
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.navigateButton:hover {
+    background-color: #1abc9c; /* 호버 시 밝은 초록색 */
+    transform: scale(1.1);
+}
+
+.toDo {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    overflow-y: auto;
+    border: 1px solid var(--todo-border-color);
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    scrollbar-width: thin; /* Firefox */
+}
+
+.toDoList {
+    border: 1px solid var(--todo-border-color);
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: var(--todo-background-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.toDoList:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px var(--todo-hover-shadow);
+}
+
+.mainTask {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--todo-border-color);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.mainTaskTitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--todo-title-color);
+}
+
+.subTask {
+    display: flex;
+    align-items: center;
+    background-color: var(--subtask-background);
+    margin: 5px 0;
+    padding: 8px 12px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.subTaskCheck {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.subTaskText {
+    font-size: 16px;
+    margin-left: 10px;
+    color: var(--todo-description-color);
+    font-weight: 500;
+}
+
+.noTodoMessage {
+    font-size: 18px;
+    color: var(--todo-description-color);
+    text-align: center;
+    margin-top: 20px;
+    font-style: italic;
+    padding: 20px;
+    border: 1px dashed var(--todo-border-color);
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
