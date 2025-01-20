@@ -64,6 +64,8 @@ const LoginPage = () => {
                 alert('이메일 또는 비밀번호를 확인해주세요.');
             } else if (loginCode === 404) {
                 alert('오류가 발생했습니다.');
+            } else {
+                alert('로그인 중 오류 발생')
             }
         } catch (error) {
             console.error('Google Login Failed:', error);
@@ -75,27 +77,9 @@ const LoginPage = () => {
         alert('구글 로그인에 실패했습니다.');
     };
 
-    const handleKakaoLogin = async () => {
-        try {
-            const loginCode = await loginWithKakao();
-            console.log(loginCode);
-            if (loginCode === 200) {
-                navigate('/main');
-            } else if (loginCode === 401) {
-                alert('이메일 또는 비밀번호를 확인해주세요.');
-            } else if (loginCode === 404) {
-                alert('오류가 발생했습니다.');
-            }
-        } catch (error) {
-            console.error('Kakao Login Failed:', error);
-            alert(error.message || '카카오 로그인에 실패했습니다.');
-        }
-    };
-
-    const kakaoOnSuccess = async (data)=>{
+    const kakaoOnSuccess = async (data) => {
         console.log(data)
-        // const idToken = data.response.access_token  // 엑세스 토큰 백엔드로 전달
-
+        // const idToken = data.response.access_token
         try {
             const loginCode = await loginWithKakao(data.response.access_token);
             if (loginCode === 200) {
@@ -104,9 +88,11 @@ const LoginPage = () => {
                 alert('이메일 또는 비밀번호를 확인해주세요.');
             } else if (loginCode === 404) {
                 alert('오류가 발생했습니다.');
+            } else {
+                alert('로그인 중 오류 발생')
             }
         } catch (error) {
-            console.error('Google Login Failed:', error);
+            console.error('kakao Login Failed:', error);
         }
     }
     const kakaoOnFailure = (error) => {
@@ -163,21 +149,6 @@ const LoginPage = () => {
                 onSuccess={handleGoogleLoginSuccess}
                 onError={handleGoogleLoginFailure}
             />
-            <button
-                onClick={handleKakaoLogin}
-                style={{
-                    marginTop: '20px',
-                    padding: '10px 20px',
-                    backgroundColor: '#FEE500',
-                    border: 'none',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
-                    fontWeight: 'bold',
-                    width: '100%',
-                }}
-            >
-                Login with Kakao
-            </button>
             <KakaoLogin
                 token={KAKAO_JAVASCRIPT_KEY}
                 onSuccess={kakaoOnSuccess}

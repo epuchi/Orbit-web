@@ -49,7 +49,6 @@ async function loginOrbitAPI(email, password) {
  */
 async function loginWithGoogle(googleToken) {
     try {
-        console.log(googleToken);
         const response = await axios.post(
             `${baseURL}/api/auth/googlelogin?token=${googleToken}`,
             {
@@ -59,15 +58,16 @@ async function loginWithGoogle(googleToken) {
             }
         );
 
-        if (response.sucessCode === 200) {
-            console.log('code : ' , response.sucessCode)
-            console.log(response.sucessResult);
+        if(response.data.sucessCode) {
+            console.log('sucessCode : ' , response.data.sucessCode)
+            console.log(response.data.sucessResult);
+        } else if (response.data.failCode){
+            console.log('failCode : ' , response.data.failCode)
+            console.log(response.data.failResult);
         }
-        if (response.failCode === 401) {
-            console.log('code : ' , response.failCode)
-            console.log(response.failResult);
-        }
+        console.log(response.data)
         return response.data;
+
     } catch (error) {
         console.error('Google 로그인 중 에러가 발생하였습니다.');
         console.error('에러 메시지 : ', error.message);
@@ -109,31 +109,22 @@ async function loginWithGoogle(googleToken) {
 //     }
 // }
 
-async function loginWithKakao(token) {
+async function loginWithKakao(access_token) {
     try {
-        console.log('asdasdasdasd');
-        console.log(token);
         const response = await axios.post(
-            `${baseURL}/api/auth/kakaologin?code=${token}`,
+            `${baseURL}/api/auth/kakaologin?code=${access_token}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             }
         );
-        console.log(response.data);
-
-        if (response.data.sucessCode === 200) {
-            console.log('code : ' , response.sucessCode)
-            console.log(response.sucessResult);
-        }
-        if (response.data.failCode === 401) {
-            console.log('code : ' , response.failCode)
-            console.log(response.failResult);
-        }
-        if (response.data.failCode === 500) {
-            console.log('code : ' , response.failCode)
-            console.log(response.failResult);
+        if(response.data.sucessCode) {
+            console.log('sucessCode : ' , response.data.sucessCode)
+            console.log(response.data.sucessResult);
+        } else if (response.data.failCode){
+            console.log('failCode : ' , response.data.failCode)
+            console.log(response.data.failResult);
         }
         console.log(response.data)
         return response.data;

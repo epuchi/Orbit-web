@@ -47,11 +47,11 @@ export function useAuthModel() {
     const loginGoogle = async (googleToken) => {
         try {
             const userData = await authApi.loginWithGoogle(googleToken);
-            if (userData != null) {
+            if (userData.sucessCode == 200) {
                 dispatch(login(userData))
                 return 200;
             } else {
-                return 401;
+                return userData.failCode;
             }
         } catch (error) {
             console.error('로그인 데이터 처리 중 알 수 없는 에러가 발생했습니다.');
@@ -61,15 +61,14 @@ export function useAuthModel() {
     }
 
     // 카카오 로그인
-    const loginWithKakao = async (token) => {
+    const loginWithKakao = async (access_token) => {
         try {
-            const userData = await authApi.loginWithKakao(token);
-            if (userData != null) {
-                console.log(userData);
+            const userData = await authApi.loginWithKakao(access_token);
+            if (userData.sucessCode == 200) {
                 dispatch(login(userData))
-                return 200;
+                return userData.sucessCode;
             } else {
-                return 401;
+                return userData.failCode;
             }
         } catch (error) {
             console.error('로그인 데이터 처리 중 알 수 없는 에러가 발생했습니다.');
