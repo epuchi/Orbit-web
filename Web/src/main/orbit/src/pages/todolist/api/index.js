@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://34.64.173.72:3000';
+const BASE_URL = 'http://34.64.173.72:8090/api/auth/TodoList';
 
 const apiClient = axios.create({
   baseURL: BASE_URL,

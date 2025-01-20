@@ -29,7 +29,7 @@ export const sendVerificationCode = async (email) => {
     };
 
     const response = await axios.post(
-        'http://34.64.173.72:8090/api/auth/signup',
+        'http://34.64.173.72:8090/api/auth/SendCode',
         requestBody,
         {
             headers: {
@@ -49,7 +49,7 @@ export const verifyEmailCode = async (email, code) => {
     };
 
     const response = await axios.post(
-        'http://34.64.173.72:8090/api/auth/signup',
+        'http://34.64.173.72:8090/api/auth/VerifyCode',
         requestBody,
         {
             headers: {
