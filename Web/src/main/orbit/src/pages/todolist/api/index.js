@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://34.64.173.72:8090/api/auth/TodoList';
+const BASE_URL = 'http://orbit-app.net:3000/api/auth/TodoList';
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
