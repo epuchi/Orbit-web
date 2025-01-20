@@ -11,7 +11,7 @@ export const signup = async (formData) => {
     };
 
     const response = await axios.post(
-        'http://orbit-app.net:3000/api/auth/signup',
+        'http://orbit-app.net:8090/api/auth/signup',
         requestBody,
         {
             headers: {
@@ -29,7 +29,7 @@ export const sendVerificationCode = async (email) => {
     };
 
     const response = await axios.post(
-        'http://orbit-app.net:3000/api/auth/SendCode',
+        'http://orbit-app.net:8090/api/auth/SendCode',
         requestBody,
         {
             headers: {
@@ -49,7 +49,7 @@ export const verifyEmailCode = async (email, code) => {
     };
 
     const response = await axios.post(
-        'http://orbit-app.net:3000/api/auth/VerifyCode',
+        'http://orbit-app.net:8090/api/auth/VerifyCode',
         requestBody,
         {
             headers: {
