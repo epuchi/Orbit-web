@@ -99,7 +99,7 @@ const useTodoState = () => {
   };
 };
 
-// 투두 폼 컴포넌트트
+// 투두 폼 컴포넌트
 const TodoForm = ({ onSubmit, selectedDate }) => {
   const [mainTask, setMainTask] = useState('');
   const [isMainTaskFixed, setIsMainTaskFixed] = useState(false);
@@ -344,7 +344,7 @@ const TodoForm = ({ onSubmit, selectedDate }) => {
   );
 };
 
-// TodoList Component
+// TodoList 컴포넌트
 const TodoList = ({ todos, onDelete }) => {
 
   const todoList = todos || [];
@@ -384,7 +384,7 @@ const TodoList = ({ todos, onDelete }) => {
   );
 };
 
-// Main Component
+// 메인 컴포넌트
 const TodoListPage = () => {
   const {
     todos,
