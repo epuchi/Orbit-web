@@ -31,8 +31,8 @@ const LoginPage = () => {
 
         /* 개발용 테스트 계정 */
         if (email == 'jite1214@gmail.com') {
-            // const userData = email
-            // dispatch(login(userData));
+            const userData = email
+            dispatch(login(userData));
             navigate('/planner');
         }
 

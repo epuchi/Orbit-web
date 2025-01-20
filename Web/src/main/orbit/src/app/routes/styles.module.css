@@ -2,7 +2,7 @@
 .layoutContainer {
     display: flex;
     flex-direction: row;
-    height: calc(100vh - 100px); /* 네비게이션 바 높이를 뺀 나머지 */
+    min-height: 1080px;
     width: 100%;
 }
 
@@ -15,6 +15,6 @@
 
 /* 메인 컨텐츠 */
 .contentContainer {
-    flex: 1;
     display: flex;
+    flex: 1;
 }
