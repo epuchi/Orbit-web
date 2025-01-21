@@ -11,7 +11,7 @@ export const signup = async (formData) => {
     };
 
     const response = await axios.post(
-        'http://34.64.173.72:8090/api/auth/signup',
+        'http://orbit-app:8090/api/auth/signup',
         requestBody,
         {
             headers: {
