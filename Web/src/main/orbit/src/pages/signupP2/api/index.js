@@ -9,7 +9,7 @@ export const signupProfile = async (formData) => {
     };
 
     const response = await axios.post(
-        'http://34.64.173.72:8090/api/member/register', // API 엔드포인트
+        'http://orbit-app.net:8090/api/member/register', // API 엔드포인트
         requestBody,
         {
             headers: {
@@ -27,7 +27,7 @@ export const cancelSignup = async (email) => {
     };
 
     const response = await axios.post(
-        'http://34.64.173.72:8090/api/member/register', // API 엔드포인트
+        'http://orbit-app.net:8090/api/member/register', // API 엔드포인트
         requestBody,
         {
             headers: {

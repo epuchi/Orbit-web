@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://34.64.173.72:8090/api/auth/TodoList';
+const BASE_URL = 'http://orbit-app.net:8090/api/auth/TodoList';
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
@@ -9,6 +9,16 @@ const apiClient = axios.create({
   },
   timeout: 3000
 });
+
+// const response = await axios.post(
+//   baseURL = BASE_URL, // API 엔드포인트
+//   requestBody,
+//   {
+//       headers: {
+//           'Content-Type': 'application/json' // JSON 데이터 형식
+//       },
+//   }
+// );
 
 // 오프라인 저장소 관리
 const OfflineStorage = {
