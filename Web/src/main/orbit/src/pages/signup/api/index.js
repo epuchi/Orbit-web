@@ -24,13 +24,13 @@ export const signup = async (formData) => {
 };
 
 export const sendVerificationCode = async (email) => {
-    const requestBody = {
+    const params = new URLSearchParams({
         email: email
-    };
+    });
 
     const response = await axios.post(
-        'http://orbit-app.net:8090/api/auth/SendCode',
-        requestBody,
+        `http://orbit-app.net:8090/api/auth/SendCode?${params.toString()}`,
+        null,
         {
             headers: {
                 'Content-Type': 'application/json'
