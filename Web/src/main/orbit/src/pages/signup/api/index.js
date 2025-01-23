@@ -45,7 +45,16 @@ export const sendVerificationCode = async (email) => {
 export const verifyEmailCode = async (email, code) => {
     const requestBody = {
         email: email,
-        code: code
+        code: code,
+        requestTime: new Date().toLocaleString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        }).replace(/\./g, '-').replace(',', '')
     };
 
     const response = await axios.post(
