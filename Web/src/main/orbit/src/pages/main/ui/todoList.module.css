@@ -72,58 +72,6 @@
     scrollbar-width: thin; /* Firefox */
 }
 
-.toDoList {
-    border: 1px solid var(--todo-border-color);
-    margin: 15px 0;
-    padding: 15px;
-    border-radius: 8px;
-    background-color: var(--todo-background-color);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.toDoList:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px var(--todo-hover-shadow);
-}
-
-.mainTask {
-    display: flex;
-    flex-direction: column;
-    border-bottom: 1px solid var(--todo-border-color);
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-}
-
-.mainTaskTitle {
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--todo-title-color);
-}
-
-.subTask {
-    display: flex;
-    align-items: center;
-    background-color: var(--subtask-background);
-    margin: 5px 0;
-    padding: 8px 12px;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.subTaskCheck {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-}
-
-.subTaskText {
-    font-size: 16px;
-    margin-left: 10px;
-    color: var(--todo-description-color);
-    font-weight: 500;
-}
-
 .noTodoMessage {
     font-size: 18px;
     color: var(--todo-description-color);

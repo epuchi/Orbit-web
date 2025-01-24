@@ -97,7 +97,7 @@ export function useMainModel() {
             onCheck: 1,
         },
     ];
-    const toDoList = [
+    const toDoList2 = [
         {
             mainTask: '과제하기',
             subTaskList: ['C과제', 'JAVA과제'],
@@ -124,7 +124,25 @@ export function useMainModel() {
         },
     ]
 
-    let toDoList2 = [
+    let toDoList = [
+        {
+            mainTask: 'mainTask',
+            subTaskList: [
+                {
+                    task: 'task1',
+                    details: 'details1',
+                    tags: ['tag1', 'tag2'],
+                    onChecked: 0
+                },
+                {
+                    task: 'task2',
+                    details: 'details2',
+                    tags: ['tag1'],
+                    onChecked: 1
+                },
+            ],
+            date: '2025-01-02'
+        },
         {
             mainTask: 'mainTask',
             subTaskList: [
@@ -137,12 +155,29 @@ export function useMainModel() {
                 {
                     task: 'task2',
                     details: 'details2',
-                    tags: ['tag1', 'tag2'],
+                    tags: ['tag1'],
                     onChecked: 1
                 },
             ],
             date: '2025-01-02'
-        }
+        },{
+            mainTask: 'mainTask',
+            subTaskList: [
+                {
+                    task: 'task1',
+                    details: 'details1',
+                    tags: ['tag1', 'tag2'],
+                    onChecked: 1
+                },
+                {
+                    task: 'task2',
+                    details: 'details2',
+                    tags: ['tag1'],
+                    onChecked: 1
+                },
+            ],
+            date: '2025-01-02'
+        },
     ]
 
     const alarm = [

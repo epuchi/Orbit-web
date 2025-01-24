@@ -28,74 +28,45 @@ const TodoList = () => {
                 </button>
             </div>
 
-            {/* 투두 리스트 본문
-            <div className={styles.todoItems}>
+            <div className={styles.toDo}>
                 {toDoList.length > 0 ? (
                     toDoList.map((item, index) => (
-                        <div key={index} className={styles.todoItem}>
-                            <input
-                                type="checkbox"
-                                checked={item.onCheck === 1}
-                                readOnly
-                            />
-                            <div className={styles.todoText}>
-                                <span className={styles.todoTitle}>
-                                    {item.title}
-                                </span>
-                                <p className={styles.todoDescription}>
-                                    {item.content}
-                                </p>
+                        <div key={index}>
+                            <div className={`${styles.mainTask} border-box`}>
+                                <p className={styles.mainTaskTitle}>{item.mainTask}</p>
+                                <p>{item.date}</p>
+                                {item.subTaskList.length > 0 ? (
+                                    item.subTaskList.map((subitem, subindex) => (
+                                        <div key={subindex}>
+                                            <input type="checkbox" checked={subitem.onChecked} />
+                                            <p>{subitem.details}</p>
+                                            {subitem.tags.length > 0 ? (
+                                                subitem.tags.map((tagitem, tagindex) => (
+                                                    <div key={tagindex}>
+                                                        <div className="">
+                                                            <p>{tagitem}</p>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <div></div>
+                                            )}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className=""></div>
+                                )}
                             </div>
                         </div>
                     ))
                 ) : (
-                    // 투두 리스트가 없는 경우
                     <span className={styles.noTodoMessage}>
-                        오늘의 할 일이 없습니다!
-                        할 일들을 추가 해보세요!
+                        오늘의 할 일이 없습니다! 할 일들을 추가 해보세요!
                     </span>
                 )}
-            </div> */}
-
-<div className={styles.toDo}>
-    {toDoList.length > 0 ? (
-        toDoList.map((item, index) => (
-            <div key={item.id || index} className={`${styles.toDoList} border-box`}>
-                <input type="checkbox" name="" id="" />
-                <div className={`${styles.mainTask} border-box`}>
-                    <p className={styles.mainTaskTitle}>{item.mainTask}</p>
-                    <p>{item.details} {item.date}</p>
-                    {item.tag.length > 0 &&
-                        item.tag.map((tag, tagIndex) => (
-                            <p key={tagIndex}>{tag}</p>
-                        ))}
-                </div>
-                {item.subTaskList.length > 0 &&
-                    item.subTaskList.map((task, taskIndex) => (
-                        <div key={taskIndex} className={styles.subTask}>
-                            <input
-                                className={styles.subTaskCheck}
-                                type="checkbox"
-                                id={`subTask-${index}-${taskIndex}`}
-                            />
-                            <label
-                                className={styles.subTaskText}
-                                htmlFor={`subTask-${index}-${taskIndex}`}
-                            >
-                                {task}
-                            </label>
-                        </div>
-                    ))}
             </div>
-        ))
-    ) : (
-        <span className={styles.noTodoMessage}>
-            오늘의 할 일이 없습니다! 할 일들을 추가 해보세요!
-        </span>
-    )}
-</div>
 
-        </div>
+        </div >
     );
 };
 
