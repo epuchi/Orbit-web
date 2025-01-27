@@ -47,7 +47,7 @@ export function useAuthModel() {
     const loginGoogle = async (googleToken) => {
         try {
             const userData = await authApi.loginWithGoogle(googleToken);
-            if (userData.sucessCode == 200) {
+            if (userData.successCode == 200) {
                 dispatch(login(userData))
                 return 200;
             } else {
@@ -64,7 +64,7 @@ export function useAuthModel() {
     const loginWithKakao = async (access_token) => {
         try {
             const userData = await authApi.loginWithKakao(access_token);
-            if (userData.sucessCode == 200) {
+            if (userData.successCode == 200) {
                 dispatch(login(userData))
                 return userData.sucessCode;
             } else {

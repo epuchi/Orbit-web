@@ -58,8 +58,8 @@ async function loginWithGoogle(googleToken) {
             }
         );
 
-        if(response.data.sucessCode) {
-            console.log('sucessCode : ' , response.data.sucessCode)
+        if(response.data.successCode == 200) {
+            console.log('successCode : ' , response.data.successCode)
             console.log(response.data.sucessResult);
         } else if (response.data.failCode){
             console.log('failCode : ' , response.data.failCode)
