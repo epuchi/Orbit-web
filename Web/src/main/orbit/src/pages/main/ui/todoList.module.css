@@ -1,10 +1,12 @@
 :root {
-    --todo-title-color: #3498db; /* 블루 계열로 좀 더 세련되게 */
-    --todo-description-color: #2c3e50; /* 다크 그레이 */
-    --todo-border-color: #dcdde1; /* 밝은 그레이 */
-    --todo-background-color: #ecf0f1; /* 밝은 배경색 */
-    --todo-hover-shadow: rgba(0, 0, 0, 0.2); /* 호버 시 더 부드러운 그림자 */
-    --subtask-background: #f8f9fa; /* 서브태스크 배경 */
+    --todo-title-color: #3498db;
+    --todo-description-color: #2c3e50;
+    --todo-border-color: #dcdde1;
+    --todo-background-color: #ecf0f1;
+    --todo-hover-shadow: rgba(0, 0, 0, 0.2);
+    --subtask-background: #f8f9fa;
+    --main-task-background: #ffffff;
+    --completed-task-color: #95a5a6; /* 완료된 태스크 색상 */
 }
 
 .todoListContainer {
@@ -15,16 +17,19 @@
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    font-family: "Arial", sans-serif;
 }
 
 .todoListHeader {
-    padding: 10px 0;
+    position: sticky; /* 헤더 고정 */
+    top: 0; /* 스크롤 시 페이지 최상단에 고정 */
+    z-index: 10; /* 다른 요소 위에 표시되도록 설정 */
+    background-color: var(--todo-background-color); /* 고정 시 배경색 유지 */
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 0;
     border-bottom: 2px solid var(--todo-border-color);
-    margin-bottom: 20px;
 }
 
 .todoListHeader > span {
@@ -42,34 +47,123 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.3s ease, transform 0.2s ease;
     border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.navigateButton > a {
-    font-size: 16px;
-    color: #fff;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.navigateButton:hover {
-    background-color: #1abc9c; /* 호버 시 밝은 초록색 */
-    transform: scale(1.1);
 }
 
 .toDo {
-    width: 100%;
-    height: auto;
-    max-height: 70vh;
-    overflow-y: auto;
+    flex: 1; /* 남은 공간을 차지하여 스크롤 가능 */
+    overflow-y: auto; /* 스크롤 가능하도록 설정 */
     border: 1px solid var(--todo-border-color);
     border-radius: 8px;
-    background-color: #ffffff;
+    background-color: var(--main-task-background);
     padding: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    scrollbar-width: thin; /* Firefox */
+    max-height: calc(100vh - 80px); /* 화면 높이에서 헤더 높이 제외 */
+}
+
+.mainTaskContainer {
+    margin-bottom: 15px;
+}
+
+.mainTask {
+    padding: 15px;
+    background-color: var(--main-task-background);
+    border: 1px solid var(--todo-border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.mainTask:hover {
+    background-color: #f7f7f7;
+    transform: translateY(-3px);
+}
+
+.completedMainTask {
+    text-decoration: line-through;
+    color: var(--completed-task-color);
+}
+
+.subTaskList {
+    margin-top: 10px;
+    padding-left: 20px;
+    border-left: 2px solid var(--todo-border-color);
+}
+
+.subTask {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    padding: 10px;
+    background-color: var(--subtask-background);
+    border-radius: 6px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.subTask:hover {
+    background-color: #eaecef;
+}
+
+.checkboxInput {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    background-color: var(--main-task-background);
+    border: 2px solid var(--todo-border-color);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.checkboxInput:checked + .checkbox {
+    background-color: #1abc9c; /* 체크 상태의 배경색 */
+    border-color: #16a085; /* 체크 상태의 테두리 색상 */
+}
+
+.checkboxInput:checked + .checkbox::after {
+    content: "✔";
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.subTaskDetails {
+    margin-left: 10px;
+    color: var(--todo-description-color);
+}
+
+.tags {
+    margin-left: auto;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #dcdde1;
+    color: var(--todo-description-color);
+    font-size: 12px;
+    padding: 5px 10px;
+    margin: 3px;
+    border-radius: 4px;
 }
 
 .noTodoMessage {
