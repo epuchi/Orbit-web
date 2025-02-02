@@ -23,13 +23,14 @@ async function loginOrbitAPI(email, password) {
                 },
             }
         );
-        if (response.sucessCode === 200) {
-            console.log('code : ' , response.sucessCode)
-            console.log(response.sucessResult);
+        console.log(response.data);
+        if (response.data.sucessCode === 200) {
+            console.log('code : ' , response.data.sucessCode)
+            console.log(response.data.sucessResult);
             return response.data
-        }else if (response.failCode === 401) {
-            console.log('code : ' , response.failCode)
-            console.log(response.failResult);
+        }else if (response.data.failCode === 404) {
+            console.log('code : ' , response.data.failCode)
+            console.log(response.data.failResult);
             return response.data
         } else {
             throw new Error()

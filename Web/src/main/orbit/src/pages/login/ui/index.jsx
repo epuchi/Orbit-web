@@ -59,6 +59,7 @@ const LoginPage = () => {
         try {
             const loginCode = await loginGoogle(credentialResponse.credential);
             if (loginCode === 200) {
+                console.log("로그인 성공!!!!! " , loginCode)
                 navigate('/main');
             } else if (loginCode === 401) {
                 alert('이메일 또는 비밀번호를 확인해주세요.');
@@ -82,6 +83,7 @@ const LoginPage = () => {
         // const idToken = data.response.access_token
         try {
             const loginCode = await loginWithKakao(data.response.access_token);
+            console.log("loginCode : ", loginCode)
             if (loginCode === 200) {
                 navigate('/main');
             } else if (loginCode === 401) {

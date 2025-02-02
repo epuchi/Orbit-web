@@ -66,7 +66,7 @@ export function useAuthModel() {
             const userData = await authApi.loginWithKakao(access_token);
             if (userData.successCode == 200) {
                 dispatch(login(userData))
-                return userData.sucessCode;
+                return userData.successCode;
             } else {
                 return userData.failCode;
             }
