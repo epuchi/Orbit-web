@@ -2,8 +2,6 @@
 .layoutContainer {
     display: flex;
     flex-direction: row;
-    min-height: 1080px;
-    width: 100%;
 }
 
 /* 사이드바 */
@@ -17,4 +15,5 @@
 .contentContainer {
     display: flex;
     flex: 1;
+    min-width: 1200px;
 }

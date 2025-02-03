@@ -11,7 +11,6 @@ async function getMainData() {
             },
         });
         console.log(response.data)
-        console.log("데이터 받아오면 이 로그가 떠야 정상임 ㅇㅇ ")
         if (response.data?.successCode === 200) {
             console.log("API 성공:", response.data.successResult);
             return response.data.data; // 필요한 데이터만 반환

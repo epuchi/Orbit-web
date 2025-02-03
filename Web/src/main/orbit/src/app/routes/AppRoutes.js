@@ -23,7 +23,7 @@ const AppRoutes = () => {
     const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
     return (
-        <div style={{display:'flex', flex:1, flexDirection:'column', minWidth: '1200px'}}>
+        <div style={{display:'flex', flexDirection:'column', minWidth: '1200px', flex:1}}>
             <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
                 {/* 상단 네비게이션 바 */}
                 {!shouldHideNavbar && <NavBar />}
