@@ -4,12 +4,14 @@ const baseURL = REACT_APP_API_BASE_URL;
 
 async function getMainData() {
     try {
-        const response = await axios.post(`${baseURL}/api/auth/MainData`, {
+        console.log("데이터 호출 시작")
+        const response = await axios.get(`${baseURL}/api/auth/MainData?resources=todoList,planner,alarm,board`, { //http://orbit-app.net:8090/api/auth/MainData
             headers: {
                 "Content-Type": "application/json",
             },
         });
-
+        console.log(response.data)
+        console.log("데이터 받아오면 이 로그가 떠야 정상임 ㅇㅇ ")
         if (response.data?.successCode === 200) {
             console.log("API 성공:", response.data.successResult);
             return response.data.data; // 필요한 데이터만 반환
@@ -18,6 +20,7 @@ async function getMainData() {
             return null; // 실패 시 null 반환
         }
     } catch (error) {
+        console.log("이거 왜 안되냐 ")
         console.error("API 호출 중 오류:", error.message);
         return null; // 에러 발생 시 null 반환
     }

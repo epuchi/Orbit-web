@@ -16,6 +16,7 @@ export function useMainModel() {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                console.log("데이터 받아온다잉? ")
                 const data = await authApi.getMainData();
 
                 if (data) {
