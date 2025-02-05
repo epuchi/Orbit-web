@@ -10,16 +10,6 @@ const apiClient = axios.create({
   timeout: 3000
 });
 
-// const response = await axios.post(
-//   baseURL = BASE_URL, // API 엔드포인트
-//   requestBody,
-//   {
-//       headers: {
-//           'Content-Type': 'application/json' // JSON 데이터 형식
-//       },
-//   }
-// );
-
 // 오프라인 저장소 관리
 const OfflineStorage = {
   getOfflineTodos() {
@@ -61,7 +51,7 @@ const OfflineStorage = {
 // 네트워크 상태 확인
 const checkOnlineStatus = async () => {
   try {
-    await apiClient.get('/ping');
+    await apiClient.get('/');  // Base URL로 ping
     return true;
   } catch (error) {
     return false;
@@ -94,21 +84,24 @@ const handleApiError = (error) => {
   if (!error.response) {
     throw new Error('서버에 연결할 수 없습니다. 데이터를 임시 저장합니다.');
   }
-  throw new Error(error.response?.data?.message || '서버 오류가 발생했습니다.');
+  throw new Error(error.response?.data?.data || '서버 오류가 발생했습니다.');
 };
 
 // Todo API
 export const TodoAPI = {
-  async fetchAllTodos() {
+  async fetchAllTodos(memberId) {
     if (!navigator.onLine) {
-        return OfflineStorage.getOfflineTodos();
-      }
+      return OfflineStorage.getOfflineTodos();
+    }
 
     try {
-      const response = await apiClient.get('/todos');
-      const serverTodos = response.data;
-      const offlineTodos = OfflineStorage.getOfflineTodos();
-      return [...serverTodos, ...offlineTodos];
+      const response = await apiClient.get(`/?memberId=${memberId}`);
+      if (response.data.successResult) {
+        const serverTodos = response.data.data;
+        const offlineTodos = OfflineStorage.getOfflineTodos();
+        return [...serverTodos, ...offlineTodos];
+      }
+      throw new Error(response.data.data);
     } catch (error) {
       if (!error.response) {
         return OfflineStorage.getOfflineTodos();
@@ -119,25 +112,27 @@ export const TodoAPI = {
 
   async createTodo(todoData) {
     try {
-      const response = await apiClient.post('/todos', todoData);
-      await syncOfflineTodos(); // 오프라인 데이터 동기화 시도
-      return response.data;
+      const response = await apiClient.post('/', {
+        memberId: todoData.memberId,
+        mainTask: todoData.mainTask,
+        subTaskList: todoData.subTaskList.map(sub => ({
+          task: sub.task,
+          details: sub.details || "",
+          tags: sub.tags || [],
+          onChecked: sub.onChecked
+        })),
+        date: todoData.date
+      });
+
+      if (response.data.successResult) {
+        await syncOfflineTodos();
+        return response.data;
+      }
+      throw new Error(response.data.data);
     } catch (error) {
       if (!error.response) {
         return OfflineStorage.addOfflineTodo(todoData);
       }
-      handleApiError(error);
-    }
-  },
-
-  async deleteTodo(todoId) {
-    try {
-      if (todoId.startsWith('offline_')) {
-        OfflineStorage.removeOfflineTodo(todoId);
-        return;
-      }
-      await apiClient.delete(`/todos/${todoId}`);
-    } catch (error) {
       handleApiError(error);
     }
   },
@@ -147,12 +142,38 @@ export const TodoAPI = {
       if (todoId.startsWith('offline_')) {
         return OfflineStorage.updateOfflineTodo(todoId, todoData);
       }
-      const response = await apiClient.put(`/todos/${todoId}`, todoData);
-      return response.data;
+      
+      const response = await apiClient.put('/', {
+        memberId: todoData.memberId,
+        mainTask: todoData.mainTask,
+        subTaskList: todoData.subTaskList,
+        date: todoData.date
+      });
+
+      if (response.data.successResult) {
+        return response.data;
+      }
+      throw new Error(response.data.data);
     } catch (error) {
       if (!error.response) {
         return OfflineStorage.updateOfflineTodo(todoId, todoData);
       }
+      handleApiError(error);
+    }
+  },
+
+  async deleteTodo(todoId, memberId) {
+    try {
+      if (todoId.startsWith('offline_')) {
+        OfflineStorage.removeOfflineTodo(todoId);
+        return;
+      }
+      
+      const response = await apiClient.delete(`/?todoId=${todoId}&memberId=${memberId}`);
+      if (!response.data.successResult) {
+        throw new Error(response.data.data);
+      }
+    } catch (error) {
       handleApiError(error);
     }
   }
