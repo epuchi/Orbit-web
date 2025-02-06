@@ -49,7 +49,14 @@ const OfflineStorage = {
 // 네트워크 상태 확인
 const checkOnlineStatus = async () => {
   try {
-    await apiClient.post('/check');
+    const requestBody = {
+      successCode: 200,
+      successResult: true,
+      mainTask: "",
+      subTaskList: [],
+      date: new Date().toISOString().split('T')[0]
+    };
+    await apiClient.post('', requestBody);
     return true;
   } catch (error) {
     return false;
@@ -104,7 +111,7 @@ export const TodoAPI = {
         date: new Date().toISOString().split('T')[0]
       };
 
-      const response = await apiClient.post('/list', requestBody);
+      const response = await apiClient.post('', requestBody);
       if (response.data.successResult) {
         const serverTodos = response.data.data;
         const offlineTodos = OfflineStorage.getOfflineTodos();
@@ -139,7 +146,7 @@ export const TodoAPI = {
         date: todoData.date
       };
 
-      const response = await apiClient.post('/create', requestBody);
+      const response = await apiClient.post('', requestBody);
 
       if (response.data.successResult) {
         await syncOfflineTodos();
@@ -173,7 +180,7 @@ export const TodoAPI = {
         date: todoData.date
       };
       
-      const response = await apiClient.post('/update', requestBody);
+      const response = await apiClient.post('', requestBody);
 
       if (response.data.successResult) {
         return response.data;
@@ -201,7 +208,7 @@ export const TodoAPI = {
         date: todoData.date
       };
 
-      const response = await apiClient.post('/delete', requestBody);
+      const response = await apiClient.post('', requestBody);
       if (!response.data.successResult) {
         throw new Error(response.data.data);
       }
