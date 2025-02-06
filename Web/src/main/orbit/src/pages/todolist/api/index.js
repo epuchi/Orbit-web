@@ -51,7 +51,7 @@ const OfflineStorage = {
 // 네트워크 상태 확인
 const checkOnlineStatus = async () => {
   try {
-    await apiClient.get('/');  // Base URL로 ping
+    await apiClient.post('/check');
     return true;
   } catch (error) {
     return false;
@@ -84,18 +84,22 @@ const handleApiError = (error) => {
   if (!error.response) {
     throw new Error('서버에 연결할 수 없습니다. 데이터를 임시 저장합니다.');
   }
+  // failCode와 failResult 처리 추가
+  if (error.response?.data?.failCode === '401') {
+    throw new Error(error.response.data.data || '인증 오류가 발생했습니다.');
+  }
   throw new Error(error.response?.data?.data || '서버 오류가 발생했습니다.');
 };
 
 // Todo API
 export const TodoAPI = {
-  async fetchAllTodos(memberId) {
+  async fetchAllTodos() {
     if (!navigator.onLine) {
       return OfflineStorage.getOfflineTodos();
     }
 
     try {
-      const response = await apiClient.get(`/?memberId=${memberId}`);
+      const response = await apiClient.post('/list');
       if (response.data.successResult) {
         const serverTodos = response.data.data;
         const offlineTodos = OfflineStorage.getOfflineTodos();
@@ -112,14 +116,18 @@ export const TodoAPI = {
 
   async createTodo(todoData) {
     try {
-      const response = await apiClient.post('/', {
-        memberId: todoData.memberId,
+      // 데이터 유효성 검사 추가
+      if (!todoData.mainTask || !todoData.date || !Array.isArray(todoData.subTaskList)) {
+        throw new Error('필수 데이터가 누락되었습니다.');
+      }
+
+      const response = await apiClient.post('/create', {
         mainTask: todoData.mainTask,
         subTaskList: todoData.subTaskList.map(sub => ({
           task: sub.task,
           details: sub.details || "",
-          tags: sub.tags || [],
-          onChecked: sub.onChecked
+          tags: Array.isArray(sub.tags) ? sub.tags : [],
+          onChecked: typeof sub.onChecked === 'number' ? sub.onChecked : 0
         })),
         date: todoData.date
       });
@@ -139,14 +147,23 @@ export const TodoAPI = {
 
   async updateTodo(todoId, todoData) {
     try {
+      if (!todoId) {
+        throw new Error('todoId가 필요합니다.');
+      }
+
       if (todoId.startsWith('offline_')) {
         return OfflineStorage.updateOfflineTodo(todoId, todoData);
       }
       
-      const response = await apiClient.put('/', {
-        memberId: todoData.memberId,
+      const response = await apiClient.post('/update', {
+        todoId,
         mainTask: todoData.mainTask,
-        subTaskList: todoData.subTaskList,
+        subTaskList: todoData.subTaskList.map(sub => ({
+          task: sub.task,
+          details: sub.details || "",
+          tags: Array.isArray(sub.tags) ? sub.tags : [],
+          onChecked: typeof sub.onChecked === 'number' ? sub.onChecked : 0
+        })),
         date: todoData.date
       });
 
@@ -162,14 +179,20 @@ export const TodoAPI = {
     }
   },
 
-  async deleteTodo(todoId, memberId) {
+  async deleteTodo(todoId) {
     try {
+      if (!todoId) {
+        throw new Error('todoId가 필요합니다.');
+      }
+
       if (todoId.startsWith('offline_')) {
         OfflineStorage.removeOfflineTodo(todoId);
         return;
       }
       
-      const response = await apiClient.delete(`/?todoId=${todoId}&memberId=${memberId}`);
+      const response = await apiClient.post('/delete', {
+        todoId
+      });
       if (!response.data.successResult) {
         throw new Error(response.data.data);
       }
