@@ -18,6 +18,7 @@ const Signup = ({
     const goToSignupP2 = () => {
         navigate('/signupP2'); // 회원가입 인적사항 페이지로 이동
     };
+    
 
     return (
         <div className={styles.container}>
@@ -100,6 +101,7 @@ const Signup = ({
                 </button>
 
                 <button onClick={goToSignupP2}>임시</button>
+                
             </form>
             {success && <p className={styles.success}>회원가입 성공!</p>}
             {success && <p>{goToSignupP2}</p>}

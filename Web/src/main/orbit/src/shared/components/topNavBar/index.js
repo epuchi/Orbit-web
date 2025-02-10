@@ -35,6 +35,10 @@ const TopNavBar = () => {
         navigate('/login', { replace: true }); // 로그인 페이지로 이동
     };
 
+    const handleProfile = () => {
+        navigate('/profile');
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.topArea}>
@@ -58,7 +62,7 @@ const TopNavBar = () => {
                     <a onClick={handleLogout} className={styles.navigateText}>로그아웃</a>
                 </div>
                 <div className={styles.navigateArea}>
-                    <a className={styles.navigateText}>프로필</a>
+                    <a onClick={handleProfile} className={styles.navigateText}>프로필</a>
                 </div>
             </div>
         </div>

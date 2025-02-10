@@ -14,6 +14,7 @@ import NavBar from '@/shared/components/topNavBar';
 import SideBar from '@/shared/components/sidBar';
 import styles from './styles.module.css';
 import SignupDetailsPage from '@/pages/signupP2';
+import ProfilePage from '@/pages/profile';
 
 const AppRoutes = () => {
     const location = useLocation();
@@ -37,6 +38,7 @@ const AppRoutes = () => {
                             <Route path="/login" element={<LoginPage />} />
                             <Route path="/signup" element={<SignupPage />} />
                             <Route path="/signupP2" element={<SignupDetailsPage />} />
+                            <Route path="/profile" element={<ProfilePage />} />
 
                             {/* 인증된 사용자만 접근 */}
                             <Route
