@@ -1,14 +1,30 @@
 import axios from 'axios';
 
 const BASE_URL = 'http://orbit-app.net:8090/api/auth/TodoList';
+const USER_TOKEN = localStorage.getItem('userToken');
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
+    'Authorization': `Bearer ${USER_TOKEN}`
   },
   timeout: 3000
 });
+
+
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('userToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // 오프라인 저장소 관리
 const OfflineStorage = {
