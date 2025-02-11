@@ -27,11 +27,12 @@ export function useAuthModel() {
     const dispatch = useDispatch();
     // 이메일/비밀번호 로그인
     const loginOrbit = async (email, password) => {
-        // dispatch(login(userData));
+
         try {
             const userData = await authApi.loginOrbitAPI(email, password);
             if(userData != null) {
                 return 200;
+                dispatch(login(userData));
             } else {
                 return 401;
             }

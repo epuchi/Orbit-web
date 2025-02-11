@@ -4,10 +4,20 @@ const baseURL = REACT_APP_API_BASE_URL;
 
 async function getMainData() {
     try {
-        console.log("데이터 호출 시작")
-        const response = await axios.get(`${baseURL}/api/auth/MainData?resources=todoList,planner,alarm,board`, { //http://orbit-app.net:8090/api/auth/MainData
+        // 로컬 스토리지에서 user 데이터 가져오기
+        const userDataString = localStorage.getItem("user");
+
+        // JSON 데이터가 존재하면 파싱하여 객체로 변환
+        const userData = userDataString ? JSON.parse(userDataString) : null;
+
+        // authToken만 추출
+        const authToken = userData?.data?.authToken || ""; // authToken이 없으면 빈 문자열 반환
+        console.log("추출된 authToken:", authToken);
+
+        const response = await axios.get(`${baseURL}/api/auth/MainData?resources=todoList,planner,alarm,board`, {
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": authToken ? `Bearer ${authToken}` : "", // 토큰이 있으면 Authorization 헤더에 추가
             },
         });
         console.log(response.data)
